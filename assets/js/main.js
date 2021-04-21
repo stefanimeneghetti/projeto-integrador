@@ -26,5 +26,17 @@ function openSidebar() {
     })
 }
 
+function showListItemDetails() {
+    const listItem = document.querySelectorAll(".list__list-item");
+    const listItemBtn = document.querySelectorAll(".list-item__show-details");
+    
+    for (let i = 0; i < listItem.length; i++) {
+        listItemBtn[i].addEventListener("click", e => {
+            listItem[i].classList.toggle("list__list-item--open");
+        });
+    }
+}
+
 openSidebar();
 openSidebarDropdowns();
+showListItemDetails();

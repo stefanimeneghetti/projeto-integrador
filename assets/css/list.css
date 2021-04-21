@@ -1,0 +1,78 @@
+.page-content__list {
+    margin-top: 15px;
+    border-top: solid 1px #827A98;
+}
+
+.list__list-item{
+    border-bottom: solid 1px #827A98;
+    padding: 10px 5px;
+    display: grid;
+    align-items: center;
+    grid-template-rows: auto;
+    grid-template-columns: 90% 10%;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.list__list-item--open {
+    grid-template-rows: auto auto;
+    grid-template-areas: "name  details"
+                         "description  description";
+}
+
+.list__list-item--open .list-item__details {
+    display: block;
+    margin-top: 10px;
+}
+
+.list__list-item--open .list-item__show-details {
+    transform: rotate(180deg);
+}
+
+.list-item__details {
+    display: none;
+    grid-area: description;
+}
+
+.list-item__name {
+    font-size: 1.1rem;
+    font-weight: 400;
+    padding-right: 8px;
+    text-align: start;
+}
+
+.list-item__show-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #827A98;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.professionals__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.details__professionals {
+    margin-top: 10px;
+}
+
+.list__professional {
+    background-color: #CCCAD2;
+    width: fit-content;
+    padding: 5px 5px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.details__actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.details__actions .btn--green {
+    margin-right: 12px;
+}

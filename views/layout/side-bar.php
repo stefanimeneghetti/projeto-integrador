@@ -8,7 +8,7 @@
                 Serviços
                 <ul class="item__dropdown">
                     <li class="dropdown__item"><a href="#">Novo serviço</a></li><hr>
-                    <li class="dropdown__item"><a href="#">Listar serviços</a></li>
+                    <li class="dropdown__item"><a href="index.php?acao=servicos/listar">Listar serviços</a></li>
                 </ul>
             </li>
             <li class="nav-list__item">
