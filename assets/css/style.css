@@ -1,0 +1,144 @@
+colors {
+    --color-one: #FFFFFF;
+    --color-two: #F1F1F2;
+    --color-tree: #CCCAD2;
+    --color-four: #A49FB0;
+    --color-five: #827A98;
+}
+
+* {
+    box-sizing: border-box;
+    text-align: justify;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #CCCAD2;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #373737;
+    box-sizing: border-box;
+    min-height: 100%;
+}
+
+.sidebar {
+    background-color: #A49FB0;
+    box-shadow: 2px 0 4px #757575;
+    position: fixed;
+    top: 0;
+    width: 220px;
+    height: 100%;
+    transition: .3s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.sidebar__profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: solid 1px #333333;
+    align-self: center;
+    margin: 20px;
+}
+
+.profile-image__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.navigation {
+    border-top: solid 1px #333333;
+    border-bottom: solid 1px #333333;
+    padding: 15px 0;
+}
+
+.navigation__nav-list {
+    list-style: none;
+}
+
+.nav-list__item {
+    padding: 6px 0;
+}
+
+.nav-list__item:hover {
+    cursor: pointer;
+}
+
+.nav-list__item a {
+    display: block;
+    text-decoration: none;
+    color: #333333;
+}
+
+.item__dropdown {
+    background-color: #CCCAD2;
+    list-style: none;
+    margin-top: 5px;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 0;
+    transition: .5s;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.item__dropdown--open {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    height: fit-content;
+}
+
+
+.item__dropdown hr {
+    border-color: #EFEFEF;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.dropdown__item {
+    padding: 5px 0;
+}
+
+
+.sidebar-toggle {
+    background-color: #A49FB0;
+    border: none;
+    font-size: 1.6rem;
+    color: #efefef;
+}
+
+.sidebar-toggle:hover {
+    cursor: pointer;
+}
+
+.sidebar-toggle:focus, .sidebar-toggle:active {
+    outline-color: #CCCAD2;
+    outline-width: 1px;
+    outline-style: solid;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-225px);
+    }
+
+    .sidebar--open {
+        transform: translateX(0);
+    }
+    
+    header {
+        background-color: #A49FB0;
+        box-shadow: 0 1px 4px #757575;
+        padding: 10px;
+        padding-right: 15px;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
