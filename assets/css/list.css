@@ -50,7 +50,7 @@
     cursor: pointer;
 }
 
-.professionals__list {
+.professionals__list, .services__list {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
