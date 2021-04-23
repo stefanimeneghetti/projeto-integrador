@@ -34,4 +34,6 @@
             </tfoot>
         </table>
     </div>
+    
+    <button class="btn btn--green align-right">Salvar alterações</button>
 </div>
