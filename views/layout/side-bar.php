@@ -22,7 +22,7 @@
                 Agenda
                 <ul class="item__dropdown">
                     <li class="dropdown__item"><a href="#">Novo agendamento</a></li><hr>
-                    <li class="dropdown__item"><a href="#">Ver agenda</a></li>
+                    <li class="dropdown__item"><a href="index.php?acao=agenda/listar">Ver agenda</a></li>
                 </ul>
             </li>
             <li class="nav-list__item">

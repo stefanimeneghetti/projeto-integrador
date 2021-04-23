@@ -1,0 +1,160 @@
+.page-content__header{
+    border-bottom: solid 1px #61636F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-schedule-btn {
+    text-transform: uppercase;
+    color: #827A98;
+    font-weight: 600;
+    padding: 9px 12px 5px 12px;
+    margin-left: 3px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.toggle-schedule-btn:focus, .toggle-schedule-btn:active {
+    outline: none;
+}
+
+.toggle-schedule-btn--select {
+    background-color: #CCCAD2;
+}
+
+.schedule__item {
+    margin: 10px 0;
+    padding: 15px;
+    border: solid 2px #A49FB0;
+    border-radius: 4px;
+}
+
+.item__time {
+    font-size: .85rem;
+    font-weight: 200;
+    grid-area: time;
+}
+
+.item__service {
+    font-size: 1.2rem;
+    font-weight: 400;
+    grid-area: service;
+}
+
+.item__client-and-price {
+    grid-area: client;
+}
+
+.item__actions {
+    grid-area: actions;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (min-width: 769px) {
+    .schedule__item {
+        display: grid;
+        grid-template-columns: 65% 35%;
+        grid-template-rows: auto auto auto;
+        grid-template-areas: "time actions"
+                             "service actions"
+                             "client actions";
+    }
+}
+
+@media (max-width: 768px) {
+    .item__actions {
+        grid-area: actions;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 15px;
+    }
+}
+
+.schedule--month {
+    display: none;
+}
+
+.calendar {
+    background-color: #CCCAD2;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 25px;
+}
+
+.calendar__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info__year {
+    font-size: .8rem;
+    color: #A49FB0;
+}
+
+.info__month {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.calendar__days-week, .days__row {
+    display: flex;
+    justify-content: space-around;
+}
+
+.row__day, .row__day--no-background {
+    flex: 1;
+    padding: 5px;
+    width: 100%;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10.52%;
+    position: relative;
+}
+
+.row__day--white-background {
+    background-color: #F1F1F2;
+    cursor: pointer;
+}
+
+.row__day--purple-background {
+    background-color: #827A98;
+    cursor: pointer;
+}
+
+.row__day span {
+    position: absolute;
+    top:50%; 
+    left:50%; 
+    transform:translate(-50%, -50%); 
+    color: #333333;
+    font-weight: 600;
+}
+
+.row__day--purple-background span {
+    color: #CCCAD2;
+}
+
+.month__change-month {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.month__change-month:active, .month__change-month:focus {
+    outline: none;
+}
+
+.month__change-month--next {
+    transform: rotate(180deg);
+}
