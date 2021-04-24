@@ -1,11 +1,9 @@
 function openSidebarDropdowns() {
-    const navList = document.querySelectorAll(".nav-list__item");
-    const dropdownList = document.querySelectorAll(".item__dropdown");
-    
+    const navList = document.querySelectorAll(".nav-list__item--dropdown");
     for (let i = 0; i < navList.length; i++) {
         navList[i].addEventListener("click", e => {
-            dropdownList[i].classList.toggle("item__dropdown--open");
-            if (dropdownList[i].classList.contains("item__dropdown--open")){
+            navList[i].children[0].classList.toggle("item__dropdown--open");
+            if (navList[i].children[0].contains("item__dropdown--open")){
                 dropdownList[i].style.height = "fit-content";
                 dropdownList[i].style.paddingTop = "12px";
                 dropdownList[i].style.paddingBottom = "12px";

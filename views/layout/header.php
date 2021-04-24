@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/list.css">
     <link rel="stylesheet" href="assets/css/agenda.css">
-    <link rel="stylesheet" href="assets/css/agenda.css">
+    <link rel="stylesheet" href="assets/css/tables.css">
+    <link rel="stylesheet" href="assets/css/forms.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
 
     <title>Dashboard</title>
 </head>
