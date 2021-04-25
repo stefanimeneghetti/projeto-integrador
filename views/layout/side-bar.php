@@ -17,7 +17,7 @@
             <li class="nav-list__item nav-list__item--dropdown">
                 Profissionais
                 <ul class="item__dropdown">
-                    <li class="dropdown__item"><a href="#">Novo profissional</a></li><hr>
+                    <li class="dropdown__item"><a href="index.php?acao=profissionais/cadastrar">Novo profissional</a></li><hr>
                     <li class="dropdown__item"><a href="index.php?acao=profissionais/listar">Listar profissionais</a></li>
                 </ul>
             </li>

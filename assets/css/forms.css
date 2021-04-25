@@ -1,6 +1,164 @@
-input {
+.form-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.labeled-input input, .labeled-input select, .labeled-input option {
     padding: 12px;
     border-radius: 8px;
     border: 2px solid #827A98;
     background-color: white;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 400;
+    color: #827A98;
+}
+
+.labeled-input select:focus {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 0;
+    margin-bottom: 22px;
+}
+
+.labeled-input select, .labeled-input select option {
+    min-width: 100;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.labeled-input {
+    position: relative;
+    width: 100%;
+}
+
+.labeled-input select ~ label {
+    min-width: 170px;
+}
+
+.labeled-input input, select {
+    /* borda do label + padding do label + padding do label + borda do label */
+    margin: calc(2px + 12px + 12px + 2px) 4px 20px 20px;
+}
+
+.labeled-input label {
+    transition: .5s ease;
+    text-transform: uppercase;
+    cursor: text;
+    pointer-events: none;
+
+    position: absolute;
+    /* borda do label + padding do label */
+    left: calc(12px + 2px + 20px);
+    /* borda do label + padding do label + padding do label + borda do label + borda do input + padding do input */
+    margin-top: calc(2px + 12px + 12px + 2px + 2px + 12px);
+}
+
+.labeled-input input:focus ~ label, .labeled-input select:focus ~ label {
+    margin-top: 2px;
+    cursor: default;
+}
+
+.full-width {
+    width: 60%;
+}
+
+.half-width {
+    width: 60%;
+}
+
+.btn--rmv {
+    padding: 15px 15px;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    font-size: .9rem;
+    font-weight: 400;
+    text-align: center;
+    cursor: pointer;
+    
+    background-color: #C34C49;
+    border-color: #C34C49;  
+    color: #EFEFEF;
+}
+
+.pf-pic-upload {
+    border-radius: 50%;
+}
+
+.img-upload {
+    position: relative;
+    text-align: center;
+}
+
+.user-information__user-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-image__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+.user-image__wrapper {
+    width: 101px;
+    height: 101px;
+    border: solid 2px #ccc;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #efefef;
+}
+
+.wrapper__image-preview--default {
+    font-size: 2rem;
+}
+
+.user-image__label {
+    position: absolute;
+    bottom: -15px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    background-color: #ddd;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.user-image__image {
+    display: display;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+    .form-line {
+        display: block;
+    }
+
+    .half-width {
+        width: 90%;
+    }
+
+    .full-width {
+        width: 90%;
+    }
 }
