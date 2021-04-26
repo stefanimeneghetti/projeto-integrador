@@ -10,7 +10,7 @@
             <li class="nav-list__item nav-list__item--dropdown">
                 Serviços
                 <ul class="item__dropdown">
-                    <li class="dropdown__item"><a href="#">Novo serviço</a></li><hr>
+                    <li class="dropdown__item"><a href="index.php?acao=servicos/cadastrar">Novo serviço</a></li><hr>
                     <li class="dropdown__item"><a href="index.php?acao=servicos/listar">Listar serviços</a></li>
                 </ul>
             </li>
@@ -24,12 +24,12 @@
             <li class="nav-list__item nav-list__item--dropdown">
                 Agenda
                 <ul class="item__dropdown">
-                    <li class="dropdown__item"><a href="#">Novo agendamento</a></li><hr>
+                    <li class="dropdown__item"><a href="index.php?acao=agenda/novo-agendamento">Novo agendamento</a></li><hr>
                     <li class="dropdown__item"><a href="index.php?acao=agenda/listar">Ver agenda</a></li>
                 </ul>
             </li>
             <li class="nav-list__item">
-                <a href="#">Sair</a>
+                <a href="login">Sair</a>
             </li>
         </ul>
     </nav>

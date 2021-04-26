@@ -188,6 +188,17 @@ main {
     box-shadow: 0 0 3px #cc6866;
 }
 
+.btn--orange {
+    background-color: #C38449;
+    border-color: #947754;
+}
+
+.btn a {
+    color: #EFEFEF;
+    font-weight: normal;
+    text-decoration: none;
+}
+
 @media (max-width: 768px) {
     .sidebar {
         transform: translateX(-225px);

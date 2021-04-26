@@ -1,10 +1,10 @@
-<div class="small-title">Cadastrar profissional</div>
+<div class="small-title">Editar profissional</div>
 <div class="page-content">
-    <div class="small-title">Novo profissional <hr></div>
+    <div class="small-title">Editar profissional <hr></div>
     <form>
         <div class="col-md-6 mt-4 pl-0 user-information__user-image">
             <div class="user-image__wrapper">
-                <img src="assets/images/placeholder.png" class="user-image__image" alt="Preview da imagem do usuário.">
+                <img src="assets/images/user-pic.jpg" class="user-image__image" alt="Preview da imagem do usuário.">
                 <label class="user-image__label" for="user-image" tabindex=0>
                     <input type="file" name="user-image" class="user-image__input" accept="image/*" id="user-image"/>
                     <img src="assets/images/icons/lapis.svg" alt="Selecionar foto do profissional.">
@@ -75,7 +75,7 @@
             <span class="btn--rmv">X</span>
         </span>
 
-        <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Cadastrar profissional"></div>
+        <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Salvar alterações"></div>
     </form>
 
 </div>

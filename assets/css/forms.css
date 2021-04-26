@@ -4,7 +4,7 @@
     align-items: baseline;
 }
 
-.labeled-input input, .labeled-input select, .labeled-input option {
+.labeled-input input, .labeled-input select, .labeled-input option, .labeled-input textarea {
     padding: 12px;
     border-radius: 8px;
     border: 2px solid #827A98;
@@ -36,10 +36,10 @@
 }
 
 .labeled-input select ~ label {
-    min-width: 170px;
+    min-width: 220px;
 }
 
-.labeled-input input, select {
+.labeled-input input, select, textarea {
     /* borda do label + padding do label + padding do label + borda do label */
     margin: calc(2px + 12px + 12px + 2px) 4px 20px 20px;
 }
@@ -57,7 +57,7 @@
     margin-top: calc(2px + 12px + 12px + 2px + 2px + 12px);
 }
 
-.labeled-input input:focus ~ label, .labeled-input select:focus ~ label {
+.labeled-input input:focus ~ label, .labeled-input select:focus ~ label, .labeled-input textarea:focus ~ label {
     margin-top: 2px;
     cursor: default;
 }
@@ -68,6 +68,10 @@
 
 .half-width {
     width: 60%;
+}
+
+.text-box {
+    min-height: 200px;
 }
 
 .btn--rmv {

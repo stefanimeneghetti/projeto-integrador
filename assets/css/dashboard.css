@@ -140,12 +140,6 @@
     box-shadow: 0 0 3px #12131B;
 }
 
-.dashboard .btn a {
-    color: #EFEFEF;
-    font-weight: normal;
-    text-decoration: none;
-}
-
 .component__card--expanded div.small-title {
     margin: 0;
     padding: 0;

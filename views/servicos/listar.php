@@ -1,6 +1,6 @@
 <h1 class="small-title">Listar Serviços</h1>
 <div class="page-content">
-    <button class="btn btn--green align-right">Novo Serviço</button>
+    <button class="btn btn--green align-right"><a href="index.php?acao=servicos/cadastrar">Novo serviço</a></button>
     <div class="page-content__list">
         <div class="list__list-item">
             <div class="list-item__name">Nome do serviço</div>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="details__actions">
-                    <button class="btn btn--green align-right">Editar</button>
+                    <button class="btn btn--green align-right"><a href="index.php?acao=servicos/editar">Editar</a></button>
                     <button class="btn btn--red align-right">Excluir</button>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="details__actions">
-                    <button class="btn btn--green align-right">Editar</button>
+                    <button class="btn btn--green align-right"><a href="index.php?acao=servicos/editar">Editar</a></button>
                     <button class="btn btn--red align-right">Excluir</button>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="details__actions">
-                    <button class="btn btn--green align-right">Editar</button>
+                    <button class="btn btn--green align-right"><a href="index.php?acao=servicos/editar">Editar</a></button>
                     <button class="btn btn--red align-right">Excluir</button>
                 </div>
             </div>

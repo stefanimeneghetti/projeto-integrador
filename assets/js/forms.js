@@ -4,27 +4,27 @@ function imageInput(){
     const imageInput = document.querySelector(".user-image__input");
     const imagePreviewIcon = document.querySelector(".wrapper__image-preview--default");
 
-    imageInput.addEventListener("change", function (e) {
-        const imageFile = this.files[0];
+    if (imageInput)
+        imageInput.addEventListener("change", function (e) {
+            const imageFile = this.files[0];
 
-        if(imageFile) {
-            const reader = new FileReader();
+            if(imageFile) {
+                const reader = new FileReader();
 
-            reader.addEventListener("load", function (e) {
-                image.setAttribute('src', this.result);
-                image.classList.add(".user-image__image--preview")
-                image.style.display = "block";
-                imagePreviewIcon.style.display = "none"
-                    
-            });
+                reader.addEventListener("load", function (e) {
+                    image.setAttribute('src', this.result);
+                    image.classList.add(".user-image__image--preview")
+                    image.style.display = "block";
+                    imagePreviewIcon.style.display = "none"
+                        
+                });
 
-            reader.readAsDataURL(imageFile);
-        } else {
-            image.style.display = null;
-            imagePreviewIcon.style.display = null;
-        }
-    });
-
+                reader.readAsDataURL(imageFile);
+            } else {
+                image.style.display = null;
+                imagePreviewIcon.style.display = null;
+            }
+        });
 }
 
 function fixPlaceholder(){
@@ -50,6 +50,18 @@ function fixPlaceholder(){
             });
             
         }
+    }
+}
+
+function togglePriceFieldLock() {
+    const priceField = document.querySelector("#price");
+    const paymentMethodField = document.querySelector("#payment-method");
+    if (paymentMethodField.value == '3') {
+        priceField.removeAttribute("required");
+        priceField.setAttribute("disabled", "true");
+    } else {
+        priceField.removeAttribute("disabled");
+        priceField.setAttribute("required", "true");
     }
 }
 

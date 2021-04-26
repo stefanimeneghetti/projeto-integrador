@@ -1,6 +1,6 @@
 <h1 class="small-title">Listar Profissionais</h1>
 <div class="page-content">
-    <button class="btn btn--green align-right">Novo Profissional</button>
+    <button class="btn btn--green align-right"><a href="index.php?acao=profissionais/cadastrar">Novo profissional</a></button>
     <div class="page-content__list">
         <div class="list__list-item">
             <div class="list-item__name">Nome do profissional</div>
@@ -13,7 +13,7 @@
                 </div>
                 
                 <div class="details__actions">
-                    <button class="btn btn--green align-right">Editar</button>
+                    <button class="btn btn--green align-right"><a href="index.php?acao=profissionais/editar">Editar</a></button>
                     <button class="btn btn--red align-right">Excluir</button>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 </div>
                 
                 <div class="details__actions">
-                    <button class="btn btn--green align-right">Editar</button>
+                    <button class="btn btn--green align-right"><a href="index.php?acao=profissionais/editar">Editar</a></button>
                     <button class="btn btn--red align-right">Excluir</button>
                 </div>
             </div>
