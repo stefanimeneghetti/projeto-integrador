@@ -1,7 +1,7 @@
 <div class="small-title">Editar profissional</div>
 <div class="page-content">
     <div class="small-title">Editar profissional <hr></div>
-    <form>
+    <form method="post">
         <div class="col-md-6 mt-4 pl-0 user-information__user-image">
             <div class="user-image__wrapper">
                 <img src="assets/images/user-pic.jpg" class="user-image__image" alt="Preview da imagem do usuário.">

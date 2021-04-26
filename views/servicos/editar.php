@@ -1,7 +1,7 @@
 <div class="small-title">Editar serviço</div>
 <div class="page-content">
     <div class="small-title">Editar serviço <hr></div>
-    <form>
+    <form method="post">
         <span class="labeled-input ">
             <input id="name" name="name" class="full-width" type="text" required>
             <label for="name">

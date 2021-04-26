@@ -1,7 +1,7 @@
 <div class="small-title">Cadastrar serviço</div>
 <div class="page-content">
     <div class="small-title">Novo serviço <hr></div>
-    <form>
+    <form method="post">
         <span class="labeled-input ">
             <input id="name" name="name" class="full-width" type="text" required>
             <label for="name">

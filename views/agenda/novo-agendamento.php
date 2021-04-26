@@ -1,7 +1,7 @@
 <div class="small-title">Agenda</div>
 <div class="page-content">
     <div class="small-title">Novo agendamento <hr></div>
-    <form>
+    <form method="post">
         <div class="form-line">
             <span class="labeled-input ">
                 <input id="name" name="name" class="full-width" type="text" required>

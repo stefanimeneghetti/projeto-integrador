@@ -4,7 +4,7 @@ include_once("views/layout/header.php");
     <main class="login-main">
         <div class="login"><span class="small-title">Login</span><hr>
             <div class="login-content">
-                <form>
+                <form method="post">
                     <div class="labeled-input">
                         <input id="email" name="email" type="email" required>
                         <label for="email">
