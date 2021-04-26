@@ -74,8 +74,7 @@
     min-height: 200px;
 }
 
-.btn--rmv {
-    padding: 15px 15px;
+.sqr-btn {
     border-radius: 3px;
     border-style: solid;
     border-width: 1px;
@@ -83,10 +82,19 @@
     font-weight: 400;
     text-align: center;
     cursor: pointer;
-    
-    background-color: #C34C49;
-    border-color: #C34C49;  
     color: #EFEFEF;
+}
+
+.sqr-btn--orange {
+    padding: 15px 5px;
+    background-color: #C38449;
+    border-color: #947754;
+}
+
+.sqr-btn--red {
+    padding: 15px;
+    background-color: #C34C49;
+    border-color: #8d3836;
 }
 
 .pf-pic-upload {

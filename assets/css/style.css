@@ -15,6 +15,10 @@ body {
     min-height: 100%;
 }
 
+a {
+    text-decoration: none;
+}
+
 .sidebar {
     background-color: #A49FB0;
     box-shadow: 2px 0 4px #757575;

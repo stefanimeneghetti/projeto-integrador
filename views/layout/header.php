@@ -14,10 +14,7 @@
     <link rel="stylesheet" href="assets/css/tables.css">
     <link rel="stylesheet" href="assets/css/forms.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 
     <title>Dashboard</title>
 </head>
-<body>
-    <header>
-        <button class="sidebar-toggle">&#9776;</button>
-    </header>

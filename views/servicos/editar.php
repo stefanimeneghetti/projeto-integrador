@@ -1,6 +1,6 @@
-<div class="small-title">Cadastrar serviço</div>
+<div class="small-title">Editar serviço</div>
 <div class="page-content">
-    <div class="small-title">Novo serviço <hr></div>
+    <div class="small-title">Editar serviço <hr></div>
     <form>
         <span class="labeled-input ">
             <input id="name" name="name" class="full-width" type="text" required>
@@ -60,7 +60,7 @@
             <span class="sqr-btn sqr-btn--red">X</span>
         </span>
 
-        <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Cadastrar serviço"></div>
+        <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Salvar alterações"></div>
     </form>
 
 </div>

@@ -15,20 +15,20 @@
         <hr>
         <br>
         <span class="labeled-input ">
-            <input id="name" class="full-width" type="text" required>
+            <input id="name" name="name" class="full-width" type="text" required>
             <label for="name">
                 Nome
             </label>
         </span>
         <div class="form-line">
             <span class="labeled-input">
-                <input id="password" class="half-width" type="password" required>
+                <input id="password" name="password" class="half-width" type="password" required>
                 <label for="password">
                     Senha
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="password-confirm" class="half-width" type="password" required>
+                <input id="password-confirm" name="password-confirm" class="half-width" type="password" required>
                 <label for="password-confirm">
                     Confirmar senha
                 </label>
@@ -36,13 +36,13 @@
         </div>
         <div class="form-line">
             <span class="labeled-input">
-                <input id="email" class="full-width" type="email" required>
+                <input id="email" name="email" class="full-width" type="email" required>
                 <label for="email">
                     Email
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="phone" type="tel" required>
+                <input id="phone" name="email" type="tel" required>
                 <label for="phone">
                     Telefone
                 </label>
@@ -50,7 +50,7 @@
         </div>
 
         <div class="labeled-input">
-            <input id="address" type="" required>
+            <input id="address" name="address" type="" required>
             <label for="address">
                 Endereço
             </label>
@@ -59,7 +59,7 @@
         <br><div><b>Associar serviços:</b></div><br>
         <span class="labeled-input">
             <div class="form-line">
-                <select id="services" class="half-width">
+                <select id="services" name="services" class="half-width">
                     <option hidden disabled selected value></option>
                     <option value="5">Opt 1</option>
                     <option value="2">Opt 2</option>
@@ -72,7 +72,7 @@
         </span>
         <span class="labeled-input">
             <input type="text" style="pointer-events:none;" value="Serviço X" readonly="readonly">
-            <span class="btn--rmv">X</span>
+            <span class="sqr-btn sqr-btn--red">X</span>
         </span>
 
         <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Salvar alterações"></div>

@@ -18,10 +18,11 @@ function openSidebarDropdowns() {
 
 function openSidebar() {
     const sidebarBtn = document.querySelector(".sidebar-toggle");
-    sidebarBtn.addEventListener("click", e => {
-        const sidebar = document.querySelector(".sidebar");
-        sidebar.classList.toggle("sidebar--open");
-    })
+    if (sidebarBtn)
+        sidebarBtn.addEventListener("click", e => {
+            const sidebar = document.querySelector(".sidebar");
+            sidebar.classList.toggle("sidebar--open");
+        })
 }
 
 function showListItemDetails() {

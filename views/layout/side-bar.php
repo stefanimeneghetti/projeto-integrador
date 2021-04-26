@@ -1,3 +1,7 @@
+<body>
+    <header>
+        <button class="sidebar-toggle">&#9776;</button>
+    </header>
 <div class="sidebar">
     <div class="sidebar__profile-image">
         <img src="assets/images/user-pic.jpg" alt="" class="profile-image__image">
@@ -29,7 +33,7 @@
                 </ul>
             </li>
             <li class="nav-list__item">
-                <a href="login">Sair</a>
+                <a href="login.php">Sair</a>
             </li>
         </ul>
     </nav>
