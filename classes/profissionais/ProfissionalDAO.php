@@ -25,7 +25,7 @@
         public function findOne($email) {
             try{
                 $query = $this->db_connection->prepare("select * from profissionais where email=:email");
-                $query->bindParam(":email", $email, PDO::PARAM_INT);
+                $query->bindParam(":email", $email);
                 $query->execute();
                 $data = $query->fetchAll(PDO::FETCH_CLASS, "Profissional");
                 return $data[0];
