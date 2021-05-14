@@ -50,7 +50,7 @@
         </div>
 
         <div class="labeled-input">
-            <input id="address" name="address" type="" required>
+            <input id="address" name="address" class="full-width" type="" required>
             <label for="address">
                 Endereço
             </label>

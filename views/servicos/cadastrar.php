@@ -3,14 +3,14 @@
     <div class="small-title">Novo serviço <hr></div>
     <form method="post">
         <span class="labeled-input ">
-            <input id="name" name="name" class="full-width" type="text" required>
+            <input id="name" name="name" class="full-width" type="text" maxlength="50" required>
             <label for="name">
                 Nome
             </label>
         </span>
         <div class="form-line">
             <span class="labeled-input">
-                <input id="price" name="price" class="half-width" type="text" required>
+                <input id="price" name="price" class="half-width" type="text" maxlength="8" pattern="\d+,(\d{2})?" required>
                 <label for="price">
                     Preço
                 </label>
@@ -27,7 +27,7 @@
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="estimated-time" name="estimated-time" type="text" required>
+                <input id="estimated-time" name="estimated-time" required>
                 <label for="estimated-time">
                     Tempo estimado
                 </label>

@@ -28,8 +28,15 @@
             <li class="nav-list__item nav-list__item--dropdown">
                 Agenda
                 <ul class="item__dropdown">
-                    <li class="dropdown__item"><a href="index.php?acao=agenda/novo-agendamento">Novo agendamento</a></li><hr>
+                    <li class="dropdown__item"><a href="index.php?acao=agenda/novo">Novo agendamento</a></li><hr>
                     <li class="dropdown__item"><a href="index.php?acao=agenda/listar">Ver agenda</a></li>
+                </ul>
+            </li>
+            <li class="nav-list__item nav-list__item--dropdown">
+                Cliente
+                <ul class="item__dropdown">
+                    <li class="dropdown__item"><a href="index.php?acao=cliente/novo">Novo cliente</a></li><hr>
+                    <li class="dropdown__item"><a href="index.php?acao=cliente/listar">Listar clientes</a></li>
                 </ul>
             </li>
             <li class="nav-list__item">

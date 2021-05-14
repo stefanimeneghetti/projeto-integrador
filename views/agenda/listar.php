@@ -19,7 +19,7 @@
                 </div>
                 <div class="item__actions">
                     <button class="btn btn--green align-right">Efetuado</button>
-                    <button class="btn btn--red align-right">Mais Opções</button>
+                    <button class="btn btn--red align-right"><a href="index.php?acao=agenda/editar">Mais Opções</a></button>
                 </div>
             </div>
         </div>

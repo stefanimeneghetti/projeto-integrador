@@ -17,7 +17,7 @@ include_once("views/layout/header.php");
                             Senha
                         </label>
                     </div>
-                    <input type="submit" class="btn btn--purple" value="Concluir agendamento">
+                    <input type="submit" class="btn btn--purple" value="Efetuar login">
                 </form>
                 <div class="recover"><a href="#">Esqueci minha senha</a></div>
             </div>

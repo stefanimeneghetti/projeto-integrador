@@ -34,3 +34,22 @@ tfoot td {
     vertical-align: middle;
     padding: 10px 0 10px 0;
 }
+
+.clients-list {
+    margin: 20px 0 20px 0;
+    background-color: white;
+    align-content: center;
+    table-layout: auto;
+    padding: 12px 30px 12px 30px;
+    border-radius: 6px;
+    border: 2px solid #827A98;
+}
+
+.clients-list__name {
+    text-align: start;
+}
+
+.clients-list__phone {
+    color: #A49FB0;
+    text-align: end;
+}

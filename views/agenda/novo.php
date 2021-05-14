@@ -86,31 +86,16 @@
             </div>
         </span>
 
-        <div class="form-line">  
-            <span class="labeled-input">
-                <select id="professional" name="professional" class="full-width">
-                    <option hidden disabled selected value></option>
-                    <option value="1">Zequinha</option>
-                    <option value="2">Cicraninha</option>
-                    <option value="3">Fulaninho</option>
-                </select>
-                <label for="professional">Selecionar profissional</label>
-            </span>
-                <span class="btn btn--green"><a href="#">Adicionar</a></span>
-        </div>
+        <span class="labeled-input">
+            <select id="professional" name="professional" class="full-width">
+                <option hidden disabled selected value></option>
+                <option value="1">Zequinha</option>
+                <option value="2">Cicraninha</option>
+                <option value="3">Fulaninho</option>
+            </select>
+            <label for="professional">Selecionar profissional</label>
+        </span>
         
-        <br><div><b>Serviços selecionados:</b></div><br>
-        <div class="labeled-input">
-            <input type="text" style="pointer-events:none;" value="Serviço X" readonly="readonly">
-            <span class="sqr-btn sqr-btn--red">X</span>
-            <span class="sqr-btn sqr-btn--orange"><img src="assets/images/icons/editar.svg" style="margin-bottom: -5px;"></span>
-        </div>
-        <div class="labeled-input">
-            <input type="text" style="pointer-events:none;" value="Serviço Y" readonly="readonly">
-            <span class="sqr-btn sqr-btn--red">X</span>
-            <span class="sqr-btn sqr-btn--orange"><img src="assets/images/icons/editar.svg" style="margin-bottom: -5px;"></span>
-        </div>
-
         <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Concluir agendamento"></div>
     </form>
 
