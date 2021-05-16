@@ -16,7 +16,7 @@
                 </label>
             </span>
             <span class="labeled-input">
-                <select id="payment-method" name="payment-method" class="half-width" onchange="togglePriceFieldLock()">
+                <select id="payment-method" name="payment-method" class="full-width" onchange="togglePriceFieldLock()">
                     <option hidden disabled selected value></option>
                     <option value="1">Valor mínimo</option>
                     <option value="2">Valor específico</option>

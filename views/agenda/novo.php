@@ -15,7 +15,7 @@
                     Telefone
                 </label>
             </span>
-            <span class="btn btn--orange" style="width: 30%;"><a href="#">Cliente já registrado...</a></span>
+            <div class="btn btn--orange" style="width: 30%;"><a href="#">Cliente já registrado...</a></div>
         </div>
 
         <div class="form-line">  

@@ -32,7 +32,18 @@ class Cliente
 
     public function validate(){
         $erros = array();
-        // validações                  
+        if(empty($this->getNome()))
+            $erros[] = "É necessário informar um nome";
+        if(empty($this->getTelefone()))
+            $erros[] = "É necessário informar um telefone";
+        if(preg_match("/[a-zA-Z\s]*/i", $this->getNome()))
+            $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas";
+        if(preg_match("/\d*/i", $this->getTelefone()))
+            $erros[] = "Caracteres inválidos no campo telefone. Utilize apenas números";
+        if(strlen($this->getNome()) > 50)
+            $erros[] = "Campo nome muito longo. Máximo de 50 caracteres";
+        if(strlen($this->getTelefone()) > 15)
+            $erros[] = "Campo telefone muito longo. Máximo de 15 caracteres";
         return $erros;                                 
     }   
 }

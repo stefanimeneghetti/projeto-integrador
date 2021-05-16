@@ -1,26 +1,36 @@
 <div class="small-title">Agenda</div>
 <div class="page-content">
+    <?php
+        $nome = isset($_POST['name']) ? $_POST['name'] : "";
+        $email = isset($_POST['phone']) ? $_POST['phone'] : "";
+        $tel = isset($_POST['service']) ? $_POST['service'] : "";
+        $data = isset($_POST['date']) ? $_POST['date'] : "";
+        $end = isset($_POST['time']) ? $_POST['time'] : "";
+        $bairro = isset($_POST['pago']) ? $_POST['pago'] : "";
+        $cc = isset($_POST['professional']) ? $_POST['professional'] : "";
+    ?>
+
     <div class="small-title">Editar agendamento <hr></div>
-    <form method="post">
+    <form method="POST">
         <div class="form-line">
             <span class="labeled-input ">
-                <input id="name" name="name" class="full-width" type="text" required>
+                <input id="name" name="name" class="full-width" type="text" required value="<?=$name?>">
                 <label for="name">
                     Nome do cliente
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="phone" name="phone" type="tel" required>
+                <input id="phone" name="phone" type="tel" required value="<?=$phone?>">
                 <label for="phone">
                     Telefone
                 </label>
             </span>
-            <span class="btn btn--orange" style="width: 30%;"><a href="#">Cliente já registrado...</a></span>
+            <div class="btn btn--orange" style="width: 30%;"><a href="#">Cliente já registrado...</a></div>
         </div>
 
         <div class="form-line">  
             <span class="labeled-input">
-                <select id="service" name="service" class="full-width">
+                <select id="service" name="service" class="full-width" value="<?=$service?>">
                     <option hidden disabled selected value></option>
                     <option value="1">Serviço A</option>
                     <option value="2">Serviço B</option>
@@ -95,6 +105,15 @@
             </select>
             <label for="professional">Selecionar profissional</label>
         </span>
+
+        <?php
+            if (isset($erros) && count($erros) != 0) {
+                echo "<ul>";
+                foreach ($erros as $e)
+                    echo "<li>$e</li>";
+                echo "</ul>";
+            }            
+        ?>
 
         <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Salvar alterações"></div>
     </form>

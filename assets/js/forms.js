@@ -45,7 +45,7 @@ function fixPlaceholder(){
                     label.style.marginTop = '2px';
             });
             input.addEventListener("focusout", function (e) {
-                if(e.target.value.length == 0)
+                if(e.target.value.length == 0 && !(e.target.type == 'date'))
                 {
                     const label = e.target.parentElement.querySelector("label");
                     if(label)
@@ -53,7 +53,7 @@ function fixPlaceholder(){
                 }
             });
             input.addEventListener("change", function (e) {
-                if (e.target.value.length > 0 && e.target.value != "")
+                if ((e.target.value.length > 0 && e.target.value) != "" || e.target.type == 'date')
                 {
                     const label = e.target.parentElement.querySelector("label");
                     if(label)

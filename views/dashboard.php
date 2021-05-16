@@ -113,7 +113,7 @@
         </div>
         <div class="component__btns">
             <div class="btn btn--green component__card--desktop"><a href="#">Novo agendamento</a></div>
-            <div class="btn btn--green component__card--desktop"><a href="index.php?acao=agenda/listar">Ver agenda completa</a></div>
+            <div class="btn btn--green component__card--desktop"><a href="index.php?acao=agenda/listar">Agenda completa</a></div>
 
             <div class="btn btn--green component__card--mobile"><a href="#">Novo</a></div>
             <div class="btn btn--green component__card--mobile"><a href="index.php?acao=agenda/listar">Ver agenda</a></div>
@@ -137,14 +137,8 @@
                     Horário: 15:00
                 </div>
                 <div class="component__card__btns">
-                    <div>
-                        <div class="btn btn--green"><a href="#">Confirmar e contatar</a></div>
-                        <div class="btn btn--green"><a href="#">Confirmar</a></div>
-                    </div>
-                    <div>
-                        <div class="btn btn--green"><a href="#">Contatar</a></div>
-                        <div class="btn btn--red"><a href="#">Cancelar e contatar</a></div>
-                    </div>
+                    <div class="btn btn--green"><a href="#">Confirmar</a></div>
+                    <div class="btn btn--black"><a href="#">Mais opções</a></div>
                 </div>
             </div>
         </div>
@@ -152,6 +146,7 @@
         <div id="appointment__card-2" class="component__card" onclick="switchFocus('appointment__card-2')">
             <div class="component__card--collapsed">15:00
                 <div class="small-title">Corte padrão</div>
+                
             </div>
             <div class="component__card--expanded">
                 <div>
@@ -164,20 +159,14 @@
                     Horário: 15:00
                 </div>
                 <div class="component__card__btns">
-                    <div>
-                        <div class="btn btn--green"><a href="#">Confirmar e contatar</a></div>
-                        <div class="btn btn--green"><a href="#">Confirmar</a></div>
-                    </div>
-                    <div>
-                        <div class="btn btn--green"><a href="#">Contatar</a></div>
-                        <div class="btn btn--red"><a href="#">Cancelar e contatar</a></div>
-                    </div>
+                    <div class="btn btn--green"><a href="#">Confirmar</a></div>
+                    <div class="btn btn--black"><a href="#">Mais opções</a></div>
                 </div>
             </div>
         </div>
         <div class="component__btns">
             <div class="btn btn--green component__card--desktop"><a href="index.php?acao=agenda/listar">Ver mais</a></div>
-            <div class="btn btn--green component__card--mobile"><a href="index.php?acao=agenda/listar">Ver agenda completa</a></div>
+            <div class="btn btn--green component__card--mobile"><a href="index.php?acao=agenda/listar">Agenda completa</a></div>
         </div>
     </div>
     

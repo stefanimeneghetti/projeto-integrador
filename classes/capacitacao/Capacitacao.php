@@ -23,7 +23,8 @@ class Capacitacao
 
     public function validate(){
         $erros = array();
-        // validações                  
+        if($this->getProfissional()->getAtivo() == 0)
+            $erros[] = "Profissional não encontrado";
         return $erros;                                 
     }   
 }

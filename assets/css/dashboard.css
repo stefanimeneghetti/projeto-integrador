@@ -54,10 +54,8 @@
     position: relative;
     margin: 4%;
     border: 2px solid #61636F;
-    padding: 4%;
     border-radius: inherit;
     min-height: 100px;
-    cursor: pointer;
 }
 
 #pending-payments .component__card {
@@ -66,8 +64,19 @@
 }
 
 .component__card--collapsed {
+    margin: 4%;
     display: flex;
     flex-direction: column;
+}
+
+.component__card--collapsed:after {
+    content:'';
+    position:absolute;
+    height:100%;
+    width:100%;
+    left:0;
+    top:0;
+    cursor:pointer;
 }
 
 #pending-payments .component__card--collapsed {
@@ -76,9 +85,11 @@
 }
 
 .component__card--expanded {
+    margin: 4%;
     display: none;
     flex-direction: row;
     justify-content: space-between;
+    cursor: default;
 }
 
 #pending-payments .component__card--expanded {
@@ -98,20 +109,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-#calendar-overview .component__card__btns {
     justify-content: space-around;
-}
-
-#appointments-to-confirm .component__card__btns {
-    justify-content: space-between;
-}
-
-#appointments-to-confirm .component__card__btns div {
-    display: flex;
-    flex-direction: row;
-    margin: 2px;
 }
 
 #pending-payments .component__card__btns {
@@ -155,6 +153,18 @@
     }
 }
 
+@media (max-width: 1100px) {
+    .component__card--expanded {
+        display: none;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    .component__card__btns {
+        margin-top: 2px;
+        flex-direction: row;
+    }
+}
+
 @media (max-width: 768px) {
     .dashboard {
         display: flex;
@@ -175,11 +185,6 @@
     .component__card__btns {
         padding: 2%;
         flex-direction: row;
-    }
-
-    #appointments-to-confirm .component__card__btns {
-        flex-direction: column;
-        justify-content: space-between;
     }
 
     .component__card--mobile {

@@ -105,7 +105,26 @@ class Atendimento {
 
     public function validate(){
         $erros = array();
-        // validações                  
+        // TODO validar serviço e profissional associado.
+
+        // vazios
+        if(empty($this->getData()))
+            $erros[] = "É necessário informar uma data";
+        if(empty($this->getPreco()))
+            $erros[] = "É necessário informar um preço";
+
+        // característicos
+        $data = explode("-", $this->getData());
+        if(!checkDate($data[1], $data[0], $data[2]))
+            $erros[] = "Campo data inválido";
+        if(preg_match("/\d*/", $this->getQuantidade_paga()))
+            $erros[] = "Quantidade paga inválida. Apenas dígitos são aceitos";
+        
+        // tamanho
+        if(strlen($this->getDescricao()) > 250)
+            $erros[] = "Campo descrição muito longo. Máximo de 250 caracteres";
+        if($this->getStatus() < 0 || $this->getStatus() > 7)
+            $erros[] = "Status de agendamento não reconhecido";
         return $erros;                                 
     }
 }
