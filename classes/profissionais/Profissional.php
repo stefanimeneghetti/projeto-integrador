@@ -77,19 +77,19 @@ class Profissional
             $erros[] = "É necessário informar um email";
         if(empty($this->getSenha()))
             $erros[] = "É necessário informar uma senha";
-        if(empty($this->getConfirmaSenha()))
+        else if(empty($this->getConfirmaSenha()))
             $erros[] = "É necessário confirmar a senha";
 
         // característicos
-        if(preg_match("/[\p{L}\s'-]*/i", $this->getNome()))
+        else if($this->getSenha() != $this->getConfirmaSenha())
+            $erros[] = "Os campos senha e confirmar senha precisam sesr idênticos";
+        if(preg_match("/[^\p{L}\s'-]+/i", $this->getNome()))
             $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas, ' e -";
-        if(preg_match("/\d*/i", $this->getTelefone()))
+        if(preg_match("/[^\d]+/", $this->getTelefone()))
             $erros[] = "Caracteres inválidos no campo telefone. Utilize apenas números";
-        if($this->getSenha() != $this->getConfirmaSenha())
-            $erros[] = "Os campos senha e confirmar senha precisam ser idênticos";
-        if(filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL))
+        if(!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL))
             $erros[] = "Campo email inválido";
-        if(preg_match("/[\p{L}]\d\s-]*/", $this->getEndereco()))
+        if(preg_match("/[^\p{L}]\d\s\-]+/i", $this->getEndereco()))
             $erros[] = "Caracteres inválidos no campo endereço. Utilize apenas caracteres alfanuméricos, ' e -";
         
         // tamanho
