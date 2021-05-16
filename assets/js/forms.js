@@ -33,11 +33,38 @@ function fixPlaceholder(){
     {
         input = inputs[i].querySelector("input");
         if(input) {
+            if ((input.value.length > 0 && input.value != ""))
+            {
+                const label = input.parentElement.querySelector("label");
+                if(label)
+                    label.style.marginTop = '2px';
+            }
+            input.addEventListener("focusin", function (e) {
+                const label = e.target.parentElement.querySelector("label");
+                if(label)
+                    label.style.marginTop = '2px';
+            });
+            input.addEventListener("focusout", function (e) {
+                if(e.target.value.length == 0)
+                {
+                    const label = e.target.parentElement.querySelector("label");
+                    if(label)
+                        label.style.marginTop = 'calc(2px + 12px + 12px + 2px + 2px + 12px)';
+                }
+            });
             input.addEventListener("change", function (e) {
                 if (e.target.value.length > 0 && e.target.value != "")
-                    e.target.parentElement.querySelector("label").style.marginTop = '2px';
+                {
+                    const label = e.target.parentElement.querySelector("label");
+                    if(label)
+                        label.style.marginTop = '2px';
+                }
                 else
-                    e.target.parentElement.querySelector("label").style.marginTop = 'calc(2px + 12px + 12px + 2px + 2px + 12px)';
+                {
+                    const label = e.target.parentElement.querySelector("label");
+                    if(label)
+                        label.style.marginTop = 'calc(2px + 12px + 12px + 2px + 2px + 12px)';
+                }
             });
         }            
         input = inputs[i].querySelector("select");
