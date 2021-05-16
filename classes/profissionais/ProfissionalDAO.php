@@ -68,6 +68,9 @@
 
         public function delete($email) {
             try{
+                $query = $this->db_connection->prepare("delete from capacitacao_profissionais where profissional=:email");
+                $query->bindParam(":email", $email);
+                $result = $query->execute();
                 $query = $this->db_connection->prepare("delete from profissionais where email=:email");
                 $query->bindParam(":email", $email);
                 $result = $query->execute();
@@ -83,4 +86,3 @@
             }
         }
     }
-    

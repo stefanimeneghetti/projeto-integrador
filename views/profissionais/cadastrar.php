@@ -1,3 +1,11 @@
+<?php
+    $name = isset($_POST['name']) ? $_POST['name'] : "";
+    $phone = isset($_POST['phone']) ? $_POST['phone'] : "";
+    $password = isset($_POST['password']) ? $_POST['password'] : "";
+    $confirmPassword = isset($_POST['password-confirm']) ? $_POST['password-confirm'] : "";
+    $email = isset($_POST['email']) ? $_POST['email'] : "";
+    $address = isset($_POST['address']) ? $_POST['address'] : "";
+?>
 <div class="small-title">Cadastrar profissional</div>
 <div class="page-content">
     <div class="small-title">Novo profissional <hr></div>
@@ -14,21 +22,21 @@
         <br>
         <hr>
         <br>
-        <span class="labeled-input ">
-            <input id="name" name="name" class="full-width" type="text" required>
+        <span class="labeled-input">
+            <input id="name" name="name" class="full-width" type="text" value="<?=$name?>">
             <label for="name">
                 Nome
             </label>
         </span>
         <div class="form-line">
             <span class="labeled-input">
-                <input id="password" name="password" class="half-width" type="password" required>
+                <input id="password" name="password" class="half-width" type="password">
                 <label for="password">
                     Senha
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="password-confirm" name="password-confirm" class="half-width" type="password" required>
+                <input id="password-confirm" name="password-confirm" class="half-width" type="password">
                 <label for="password-confirm">
                     Confirmar senha
                 </label>
@@ -36,13 +44,13 @@
         </div>
         <div class="form-line">
             <span class="labeled-input">
-                <input id="email" name="email" class="full-width" type="email" required>
+                <input id="email" name="email" class="full-width" type="email" value="<?=$email?>">
                 <label for="email">
                     Email
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="phone" name="phone" type="tel" required>
+                <input id="phone" name="phone" type="tel" value="<?=$phone?>">
                 <label for="phone">
                     Telefone
                 </label>
@@ -50,13 +58,13 @@
         </div>
 
         <div class="labeled-input">
-            <input id="address" name="address" class="full-width" type="" required>
+            <input id="address" name="address" class="full-width" value="<?=$address?>">
             <label for="address">
                 Endereço
             </label>
         </div>
 
-        <br><div><b>Associar serviços:</b></div><br>
+        <br><div><b>Associar serviços:</b></div>
         <span class="labeled-input">
             <div class="form-line">
                 <select id="services" name="services" class="half-width">
@@ -75,6 +83,15 @@
             <span class="sqr-btn sqr-btn--red">X</span>
         </span>
 
+        <div class="left-offset">
+        <?php
+            if (isset($erros) && count($erros) != 0) {
+                echo "<ul>";
+                foreach ($erros as $e)
+                    echo "<li>$e</li>";
+                echo "</ul>";
+            }            
+        ?></div>
         <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Cadastrar profissional"></div>
     </form>
 

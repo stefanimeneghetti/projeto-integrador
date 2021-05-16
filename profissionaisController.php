@@ -8,13 +8,26 @@ class profissionaisController {
         $profissional = new Profissional();
         $profissional->setNome($_POST["name"]);
         $profissional->setSenha($_POST["password"]);
+        $profissional->setConfirmaSenha($_POST["password-confirm"]);
         $profissional->setEmail($_POST["email"]);
         $profissional->setEndereco($_POST["address"]);
         $profissional->setTelefone($_POST["phone"]);
-
-        $db = new ProfissionalDAO();
-        $db->create($profissional); 
-        header('Location: index.php?acao=profissionais/listar');
+        $profissional->setAtivo(1);
+        $erros = $profissional->validate();
+        if(count($erros) != 0) {
+            include "views/layout/header.php";
+            include "views/layout/side-bar.php";?>
+            <main>
+            <?php include "views/profissionais/cadastrar.php";?>
+            </main>
+            <?php include "views/layout/footer.php";
+        }
+        else
+        {
+            $db = new ProfissionalDAO();
+            $db->create($profissional); 
+            header('Location: index.php?acao=profissionais/listar');
+        }
     }
 
     public function getProfessionals() {
@@ -36,7 +49,6 @@ class profissionaisController {
         $profissional->setEmail($_POST["email"]);
         $profissional->setEndereco($_POST["address"]);
         $profissional->setTelefone($_POST["phone"]);
-
         $db = new ProfissionalDAO();
         $db->update($profissional, $email); 
 
