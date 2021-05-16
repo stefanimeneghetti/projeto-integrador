@@ -6,6 +6,7 @@ class Profissional
     private $nome;
     private $senha;
     private $telefone;
+    private $confirmaSenha;
     private $endereco;
     private $ativo;
 
@@ -31,6 +32,14 @@ class Profissional
 
     public function setSenha($senha) {
         $this->senha = $senha;
+    }
+
+    public function getConfirmaSenha(){
+        return $this->confirmaSenha;
+    }
+
+    public function setConfirmaSenha($senha) {
+        $this->confirmaSenha = $senha;
     }
 
     public function getTelefone() {
@@ -68,7 +77,7 @@ class Profissional
             $erros[] = "É necessário informar um email";
         if(empty($this->getSenha()))
             $erros[] = "É necessário informar uma senha";
-        if(empty($this->getConfirmarSenha()))
+        if(empty($this->getConfirmaSenha()))
             $erros[] = "É necessário confirmar a senha";
 
         // característicos
@@ -76,7 +85,7 @@ class Profissional
             $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas, ' e -";
         if(preg_match("/\d*/i", $this->getTelefone()))
             $erros[] = "Caracteres inválidos no campo telefone. Utilize apenas números";
-        if($this->getSenha() != $this->getConfirmarSenha())
+        if($this->getSenha() != $this->getConfirmaSenha())
             $erros[] = "Os campos senha e confirmar senha precisam ser idênticos";
         if(filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL))
             $erros[] = "Campo email inválido";
