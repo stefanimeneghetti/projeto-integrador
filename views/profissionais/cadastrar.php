@@ -1,3 +1,8 @@
+<?php
+    require_once("./classes/servicos/ServicoDAO.php");
+    $db = new ServicoDAO();
+    $services = $db->all();
+?>
 <div class="small-title">Cadastrar profissional</div>
 <div class="page-content">
     <div class="small-title">Novo profissional <hr></div>
@@ -61,22 +66,75 @@
             <div class="form-line">
                 <select id="services" name="services" class="half-width">
                     <option hidden disabled selected value></option>
-                    <option value="5">Opt 1</option>
-                    <option value="2">Opt 2</option>
-                    <option value="3">Opt 3</option>
+                    <?php foreach ($services as $service) { ?>
+                    <option value="<?php echo $service->getId() ?>"><?php echo $service->getNome() ?></option>
+                    <?php } ?>
                 </select>
                 <label for="services">Selecionar serviço</label>
-                <span class="btn btn--green">Adicionar</span>
-                <span class="btn btn--green">Adicionar todos os serviços</span>
+                <span class="btn btn--green" onclick="addService()">Adicionar</span>
+                <span class="btn btn--green" onclick="addAllServices()">Adicionar todos os serviços</span>
             </div>
         </span>
-        <span class="labeled-input">
-            <input type="text" style="pointer-events:none;" value="Serviço X" readonly="readonly">
-            <span class="sqr-btn sqr-btn--red">X</span>
-        </span>
+
+        <div class="selected-services">
+            <!-- Serão adicionados via javascript -->
+        </div>
 
         <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Cadastrar profissional"></div>
     </form>
 
 </div>
 <script src="assets/js/forms.js"></script>
+
+<script>
+    function addService(service) {
+        const select = document.getElementById('services');
+        const selected = select.options[select.selectedIndex];
+        const pastSelected = document.querySelector("#serviceSelected-"+selected.value);
+        let selectedServicesDiv = document.querySelector('.selected-services');
+
+        if(selected.value == ""){
+            alert("Selecione um serviço")
+            return;
+        }
+        if (pastSelected != undefined) {
+            alert("Serviço já selecionado")
+            return;
+        }
+        
+        const newService = createServiceItem(selected);
+        selectedServicesDiv.appendChild(newService);
+    }
+
+    function createServiceItem(selected) {
+        let span = document.createElement('span');
+        span.classList.add('labeled-input');
+        span.classList.add('service-'+selected.value);
+
+        let input = document.createElement('input');
+        input.style.pointerEvents = "none";
+        input.value = selected.innerHTML;
+        input.id = "serviceSelected-" + selected.value;
+        input.name = "serviceSelected-" + selected.value;
+        span.appendChild(input);
+
+        let btn = document.createElement('span');   
+        btn.classList.add('sqr-btn');
+        btn.classList.add('sqr-btn--red');
+        btn.innerHTML = "X";
+        span.appendChild(btn);
+        return span;
+    }
+
+
+    function addAllServices() {
+        const select = document.getElementById('services');
+        let selectedServicesDiv = document.querySelector('.selected-services');
+
+        for (let i = 1; i < select.options.length; i++) {
+            const selected = select.options[i];
+            const newService = createServiceItem(selected);
+            selectedServicesDiv.appendChild(newService);
+        }
+    }
+</script>

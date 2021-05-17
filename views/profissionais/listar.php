@@ -15,17 +15,25 @@
 
         <?php foreach($professionals as $professional){ ?>
             <div class="list__list-item">
+            
                 <div class="list-item__name"><?php echo $professional->getNome() ?></div>
                 <div class="list-item__show-details">&#9660;</div>
                 <div class="list-item__details">
                     <p>Email: <?php echo $professional->getEmail() ?></p>
                     <p>Telefone: <?php echo $professional->getTelefone() ?></p>
                     <p>Endereço: <?php echo $professional->getEndereco() ?></p>
-                    <small>Serviços associados (2):</small>
-                    <div class="services__list">
-                        <div class="list__professional">Nome do serviço</div>
-                        <div class="list__professional">Nome do serviço</div>
+                   
+                    <small>Serviços associados (<?php echo count($professional->servicos) ?>):</small>
+                    <?php if (count($professional->servicos) != 0) { ?>
+                        <div class="services__list">
+                        <?php 
+                        $servicos = $professional->servicos;
+                        foreach ($servicos  as $servico) { ?>
+                            <div class="list__professional"><?php  echo $servico["nome"] ?></div>
+                       <?php } ?>
+                        
                     </div>
+                    <?php }?>
                     
                     <div class="details__actions">
                         <button class="btn btn--green align-right"><a href="index.php?acao=profissionais/editar&user=<?php echo $professional->getEmail(); ?>">Editar</a></button>

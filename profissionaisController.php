@@ -2,6 +2,8 @@
 
 require_once "./classes/profissionais/Profissional.php";
 require_once "./classes/profissionais/ProfissionalDAO.php";
+require_once "./classes/capacitacao/Capacitacao.php";
+require_once "./classes/capacitacao/CapacitacaoDAO.php";
 
 class profissionaisController {
     public function newProfessional(){
@@ -14,12 +16,32 @@ class profissionaisController {
 
         $db = new ProfissionalDAO();
         $db->create($profissional); 
+        foreach($_POST as $key => $value) { 
+            if (explode("-",$key)[0] == "serviceSelected"){
+                $serviceId = explode("-",$key)[1];
+                $professionalEmail = $profissional->getEmail();
+                
+                $capacitation = new Capacitacao();
+                $capacitation->setProfissional($professionalEmail);
+                $capacitation->setServico($serviceId);
+                
+                $db = new CapacitacaoDAO();
+                $db->create($capacitation);
+            }   
+        }
         header('Location: index.php?acao=profissionais/listar');
     }
 
     public function getProfessionals() {
         $db = new ProfissionalDAO();
         $professionals = $db->all();
+
+        $db = new CapacitacaoDAO();
+        foreach ($professionals as $professional) {
+            $services = $db->findByProfissional($professional->getEmail());
+            $professional->servicos = $services;
+        }
+
         return $professionals;
     }
 
