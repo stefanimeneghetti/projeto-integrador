@@ -23,12 +23,12 @@
                     <p>Telefone: <?php echo $professional->getTelefone() ?></p>
                     <p>Endereço: <?php echo $professional->getEndereco() ?></p>
                    
-                    <small>Serviços associados (<?php echo count($professional->servicos) ?>):</small>
-                    <?php if (count($professional->servicos) != 0) { ?>
+                    <small>Serviços associados (<?php echo count($professional->getServicos())?>):</small>
+                    <?php if (count($professional->getServicos()) != 0) {?>
                         <div class="services__list">
                         <?php 
-                        $servicos = $professional->servicos;
-                        foreach ($servicos  as $servico) { ?>
+                        $servicos = $professional->getServicos();
+                        foreach ($servicos  as $servico) {?>
                             <div class="list__professional"><?php  echo $servico["nome"] ?></div>
                        <?php } ?>
                         

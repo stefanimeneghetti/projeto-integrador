@@ -9,7 +9,7 @@ class Profissional
     private $confirmaSenha;
     private $endereco;
     private $ativo;
-    public $servicos;
+    private $servicos;
 
     public function getEmail(){
         return $this->email;
@@ -67,7 +67,18 @@ class Profissional
         $this->ativo = $ativo;
     }
 
-    public function validate(){
+    public function getServicos(){
+        return $this->servicos;
+    }
+
+    public function setServicos($servicos) {
+        $this->servicos = $servicos;
+    }
+
+    // $oldEmail é o email registrado no banco de dados do usuário em questão.
+    // deve ser null caso a validação seja chamada para o cadastro de um novo
+    // funciionário.
+    public function validate($oldEmail){
         $erros = array();
         // vazios
         if(empty($this->getNome()))
@@ -90,7 +101,7 @@ class Profissional
             $erros[] = "Caracteres inválidos no campo telefone. Utilize apenas números";
         if(!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL))
             $erros[] = "Campo email inválido";
-        if(preg_match("/[^\p{L}]\d\s\-]+/i", $this->getEndereco()))
+        if(preg_match("/[^\p{L}]\d\s\-\(\)]+/i", $this->getEndereco()))
             $erros[] = "Caracteres inválidos no campo endereço. Utilize apenas caracteres alfanuméricos, ' e -";
         
         // tamanho
@@ -108,7 +119,11 @@ class Profissional
             $erros[] = "Campo senha muito longo. Máximo de 50 caracteres";
         if(strlen($this->getSenha()) < 8)
             $erros[] = "Campo senha muito curto. Mínimo de 8 caracteres";
-            
+        
+        $query = (new ProfissionalDAO())->findOne($this->getEmail());
+        if(!is_null($query) && $query->getEmail() != $oldEmail)
+            $erros[] = "Email já registrado";
+        
         return $erros;                                 
     }   
 }

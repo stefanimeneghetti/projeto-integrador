@@ -63,8 +63,10 @@
         public function create(Capacitacao $capacitacao) {
             try{
                 $query = $this->db_connection->prepare("insert into capacitacao_profissionais (profissional, servico) values (:emailProfissional, :idServico)");
-                $query->bindParam(":idServico", $capacitacao->getServico());
-                $query->bindParam(":emailProfissional", $capacitacao->getProfissional());
+                $servico = $capacitacao->getServico();
+                $email =  $capacitacao->getProfissional();
+                $query->bindParam(":idServico", $servico);
+                $query->bindParam(":emailProfissional", $email);
                 return $query->execute();
             }
             catch(PDOException $e){
