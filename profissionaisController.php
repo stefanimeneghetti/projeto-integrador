@@ -10,26 +10,42 @@ class profissionaisController {
         $profissional = new Profissional();
         $profissional->setNome($_POST["name"]);
         $profissional->setSenha($_POST["password"]);
+        $profissional->setConfirmaSenha($_POST["password-confirm"]);
         $profissional->setEmail($_POST["email"]);
         $profissional->setEndereco($_POST["address"]);
         $profissional->setTelefone($_POST["phone"]);
-
-        $db = new ProfissionalDAO();
-        $db->create($profissional); 
-        foreach($_POST as $key => $value) { 
-            if (explode("-",$key)[0] == "serviceSelected"){
-                $serviceId = explode("-",$key)[1];
-                $professionalEmail = $profissional->getEmail();
-                
-                $capacitation = new Capacitacao();
-                $capacitation->setProfissional($professionalEmail);
-                $capacitation->setServico($serviceId);
-                
-                $db = new CapacitacaoDAO();
-                $db->create($capacitation);
-            }   
+        $profissional->setAtivo(1);
+        
+        $erros = $profissional->validate();
+        if(count($erros) != 0) {
+            include "views/layout/header.php";
+            include "views/layout/side-bar.php";?>
+            <main>
+            <?php include "views/profissionais/cadastrar.php";?>
+            </main>
+            <?php include "views/layout/footer.php";
         }
-        header('Location: index.php?acao=profissionais/listar');
+        else
+        {
+            $db = new ProfissionalDAO();
+            $db->create($profissional); 
+            $db = new ProfissionalDAO();
+            $db->create($profissional); 
+            foreach($_POST as $key => $value) { 
+                if (explode("-",$key)[0] == "serviceSelected"){
+                    $serviceId = explode("-",$key)[1];
+                    $professionalEmail = $profissional->getEmail();
+                    
+                    $capacitation = new Capacitacao();
+                    $capacitation->setProfissional($professionalEmail);
+                    $capacitation->setServico($serviceId);
+                    
+                    $db = new CapacitacaoDAO();
+                    $db->create($capacitation);
+                }   
+            }
+            header('Location: index.php?acao=profissionais/listar');
+        }
     }
 
     public function getProfessionals() {
@@ -58,7 +74,6 @@ class profissionaisController {
         $profissional->setEmail($_POST["email"]);
         $profissional->setEndereco($_POST["address"]);
         $profissional->setTelefone($_POST["phone"]);
-
         $db = new ProfissionalDAO();
         $db->update($profissional, $email); 
 

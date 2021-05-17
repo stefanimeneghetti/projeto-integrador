@@ -69,13 +69,39 @@ function fixPlaceholder(){
         }            
         input = inputs[i].querySelector("select");
         if(input) {
-            input.addEventListener("change", function (e) {
-                if (e.target.value)
-                    e.target.parentElement.querySelector("label").style.marginTop = '2px';
-                else
-                    e.target.parentElement.querySelector("label").style.marginTop = 'calc(2px + 12px + 12px + 2px + 2px + 12px)';
+            if ((input.value.length > 0 && input.value != ""))
+            {
+                const label = input.parentElement.querySelector("label");
+                if(label)
+                    label.style.marginTop = '2px';
+            }
+            input.addEventListener("focusin", function (e) {
+                const label = e.target.parentElement.querySelector("label");
+                if(label)
+                    label.style.marginTop = '2px';
             });
-            
+            input.addEventListener("focusout", function (e) {
+                if(e.target.value.length == 0 && !(e.target.type == 'date'))
+                {
+                    const label = e.target.parentElement.querySelector("label");
+                    if(label)
+                        label.style.marginTop = 'calc(2px + 12px + 12px + 2px + 2px + 12px)';
+                }
+            });
+            input.addEventListener("change", function (e) {
+                if ((e.target.value.length > 0 && e.target.value) != "")
+                {
+                    const label = e.target.parentElement.querySelector("label");
+                    if(label)
+                        label.style.marginTop = '2px';
+                }
+                else
+                {
+                    const label = e.target.parentElement.querySelector("label");
+                    if(label)
+                        label.style.marginTop = 'calc(2px + 12px + 12px + 2px + 2px + 12px)';
+                }
+            });
         }
     }
 }
