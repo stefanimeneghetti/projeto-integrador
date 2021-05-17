@@ -45,14 +45,13 @@
 
         public function findByServico($idServico) {
             try{
-                $query = $this->db_connection->prepare("select p.nome as nome_profissional, p.email as email_profissional, 
-                                                s.nome as nome_servico, s.id as id_servico from
+                $query = $this->db_connection->prepare("select p.nome, p.email from
                                                 profissionais p join capacitacao_profissionais c 
                                                 on p.email = c.profissional join servicos s on
-                                                c.servico = s.id where c.servico=:idServico");
+                                                c.servico = s.id where c.servico=:idServico and p.ativo = 1");
                 $query->bindParam(":idServico", $idServico, PDO::PARAM_INT);
                 $query->execute();
-                $data = $query->fetchAll(PDO::FETCH_CLASS, "Capacitacao");
+                $data = $query->fetchAll(PDO::FETCH_ASSOC);
                 return $data;
             }
             catch(PDOException $e){

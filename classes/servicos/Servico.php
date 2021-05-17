@@ -6,6 +6,7 @@ class Servico
     private $duracao;
     private $preco;
     private $descricao;
+    private $profissionais;
 
     public function getId() {
         return $this->id;
@@ -45,6 +46,14 @@ class Servico
 
     public function setDescricao($descricao) {
         $this->descricao = $descricao;
+    }
+
+    public function getProfissionais() {
+        return $this->profissionais;
+    }
+
+    public function setProfissionais($profissionais) {
+        $this->profissionais = $profissionais;
     }
 
     public function validate(){
