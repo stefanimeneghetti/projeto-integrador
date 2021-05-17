@@ -28,7 +28,7 @@
                     </div>
                     
                     <div class="details__actions">
-                        <button class="btn btn--green align-right"><a href="index.php?acao=profissionais/editar&user=<?php echo $professional->getEmail(); ?>">Editar</a></button>
+                        <button class="btn btn--green align-right"><a href="profissionaisController.php?acao=editar/<?php echo $professional->getEmail(); ?>">Editar</a></button>
                         <button class="btn btn--red align-right"><a href="profissionaisController.php?acao=excluir/<?php echo $professional->getEmail(); ?>">Excluir</a></button>
                     </div>
                 </div>

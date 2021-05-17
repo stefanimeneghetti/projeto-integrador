@@ -43,16 +43,45 @@ class profissionaisController {
     }
 
     public function editProfessional($email) {
-        $profissional = new Profissional();
-        $profissional->setNome($_POST["name"]);
-        $profissional->setSenha($_POST["password"]);
-        $profissional->setEmail($_POST["email"]);
-        $profissional->setEndereco($_POST["address"]);
-        $profissional->setTelefone($_POST["phone"]);
-        $db = new ProfissionalDAO();
-        $db->update($profissional, $email); 
-
-        header('Location: index.php?acao=profissionais/listar');
+        if(!isset($_POST['altera']))
+        {
+            require_once("./classes/profissionais/ProfissionalDAO.php");
+            $db = new ProfissionalDAO();
+            $professional = $db->findOne($email);
+            include_once "views/layout/header.php";
+            include_once "views/layout/side-bar.php";?>
+            <main>
+            <?php include_once "views/profissionais/editar.php";?>
+            </main>
+            <?php include_once "views/layout/footer.php";
+        }
+        else
+        {
+            $profissional = new Profissional();
+            $profissional->setNome($_POST["name"]);
+            $profissional->setSenha($_POST["password"]);
+            $profissional->setConfirmaSenha($_POST["password-confirm"]);
+            $profissional->setEmail($_POST["email"]);
+            $profissional->setEndereco($_POST["address"]);
+            $profissional->setTelefone($_POST["phone"]);
+            $profissional->setAtivo(1);
+            $erros = $profissional->validate();
+            if(count($erros) != 0) {
+                include_once "views/layout/header.php";
+                include_once "views/layout/side-bar.php";?>
+                <main>
+                <?php include_once "views/profissionais/editar.php";?>
+                </main>
+                <?php include_once "views/layout/footer.php";
+            }
+            else
+            {
+                $db = new ProfissionalDAO();
+                $db->update($profissional, $email); 
+                header('Location: index.php?acao=profissionais/listar');
+            }
+        }
+        
     }
 }
 
