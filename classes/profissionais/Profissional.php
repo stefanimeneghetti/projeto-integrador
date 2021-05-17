@@ -9,6 +9,7 @@ class Profissional
     private $confirmaSenha;
     private $endereco;
     private $ativo;
+    public $servicos;
 
     public function getEmail(){
         return $this->email;

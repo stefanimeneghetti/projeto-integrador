@@ -12,8 +12,8 @@
 
         public function all() {
             try{
-                $query = $this->db_connection->prepare("select p.nome as nome_profissional, p.email as email_profissional, 
-                                                        s.nome as nome_servico, s.id as id_servico from
+                $query = $this->db_connection->prepare("select p.email as profissional, 
+                                                        s.nome as servico, s.id as id_servico from
                                                         profissionais p join capacitacao_profissionais c 
                                                         on p.email = c.profissional join servicos s on
                                                         c.servico = s.id;");
@@ -28,14 +28,14 @@
 
         public function findByProfissional($emailProfissional) {
             try{
-                $query = $this->db_connection->prepare("select p.nome as nome_profissional, p.email as email_profissional, 
-                                    s.nome as nome_servico, s.id as id_servico from
+                $query = $this->db_connection->prepare("select  
+                                    s.nome , s.id as id from
                                     profissionais p join capacitacao_profissionais c 
                                     on p.email = c.profissional join servicos s on
                                     c.servico = s.id where c.profissional=:emailProfissional");
                 $query->bindParam(":emailProfissional", $emailProfissional);
                 $query->execute();
-                $data = $query->fetchAll(PDO::FETCH_CLASS, "Capacitacao");
+                $data = $query->fetchAll(PDO::FETCH_ASSOC);
                 return $data;
             }
             catch(PDOException $e){
