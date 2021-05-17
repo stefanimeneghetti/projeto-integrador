@@ -15,8 +15,22 @@ class profissionaisController {
         $profissional->setEndereco($_POST["address"]);
         $profissional->setTelefone($_POST["phone"]);
         $profissional->setAtivo(1);
+
+        $erros = $profissional->validate(null);
         
-        $erros = $profissional->validate();
+        $capacitacoesValidadas = array();
+        foreach($_POST as $key => $value) { 
+            if (explode("-",$key)[0] == "serviceSelected"){
+                $serviceId = explode("-",$key)[1];
+                $professionalEmail = $profissional->getEmail();
+                
+                $capacitation = new Capacitacao();
+                $capacitation->setProfissional($professionalEmail);
+                $capacitation->setServico($serviceId);
+                $capacitacoesValidadas[] = $capacitation;
+                $erros = array_merge($erros, $capacitation->validate());
+            }
+        }
         if(count($erros) != 0) {
             include "views/layout/header.php";
             include "views/layout/side-bar.php";?>
@@ -28,22 +42,12 @@ class profissionaisController {
         else
         {
             $db = new ProfissionalDAO();
-            $db->create($profissional); 
-            $db = new ProfissionalDAO();
-            $db->create($profissional); 
-            foreach($_POST as $key => $value) { 
-                if (explode("-",$key)[0] == "serviceSelected"){
-                    $serviceId = explode("-",$key)[1];
-                    $professionalEmail = $profissional->getEmail();
-                    
-                    $capacitation = new Capacitacao();
-                    $capacitation->setProfissional($professionalEmail);
-                    $capacitation->setServico($serviceId);
-                    
-                    $db = new CapacitacaoDAO();
-                    $db->create($capacitation);
-                }   
+            $db->create($profissional);
+            foreach($capacitacoesValidadas as $val) {
+                $db = new CapacitacaoDAO();
+                $db->create($val);
             }
+
             header('Location: index.php?acao=profissionais/listar');
         }
     }
@@ -55,7 +59,7 @@ class profissionaisController {
         $db = new CapacitacaoDAO();
         foreach ($professionals as $professional) {
             $services = $db->findByProfissional($professional->getEmail());
-            $professional->servicos = $services;
+            $professional->setServicos($services);
         }
 
         return $professionals;
@@ -90,7 +94,20 @@ class profissionaisController {
             $profissional->setEndereco($_POST["address"]);
             $profissional->setTelefone($_POST["phone"]);
             $profissional->setAtivo(1);
-            $erros = $profissional->validate();
+            $erros = $profissional->validate($email);
+            $capacitacoesValidadas = array();
+            foreach($_POST as $key => $value) { 
+                if (explode("-",$key)[0] == "serviceSelected"){
+                    $serviceId = explode("-",$key)[1];
+                    $professionalEmail = $profissional->getEmail();
+                    
+                    $capacitation = new Capacitacao();
+                    $capacitation->setProfissional($professionalEmail);
+                    $capacitation->setServico($serviceId);
+                    $capacitacoesValidadas[] = $capacitation;
+                    $erros = array_merge($erros, $capacitation->validate());
+                }
+            }
             if(count($erros) != 0) {
                 include_once "views/layout/header.php";
                 include_once "views/layout/side-bar.php";?>
@@ -102,11 +119,16 @@ class profissionaisController {
             else
             {
                 $db = new ProfissionalDAO();
-                $db->update($profissional, $email); 
+                $db->removeServicos($profissional->getEmail());
+                $db->update($profissional, $email);
+                foreach($capacitacoesValidadas as $val) {
+                    $db = new CapacitacaoDAO();
+                    $db->create($val);
+                }
+                
                 header('Location: index.php?acao=profissionais/listar');
             }
         }
-        
     }
 }
 

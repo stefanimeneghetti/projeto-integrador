@@ -22,9 +22,15 @@ class Capacitacao
     }
 
     public function validate(){
+        require_once "./classes/profissionais/ProfissionalDAO.php";
+        require_once "./classes/servicos/ServicoDAO.php";
         $erros = array();
-        if($this->getProfissional()->getAtivo() == 0)
+        $profissional = (new ProfissionalDAO())->findOne($this->getProfissional());
+        $servico = (new ServicoDAO())->findOne($this->getServico());
+        if(is_null($profissional) || $profissional->getAtivo() == 0)
             $erros[] = "Profissional não encontrado";
-        return $erros;                                 
+        if(is_null($servico))
+            $erros[] = "Serviço não encontrado";
+        return $erros;
     }   
 }

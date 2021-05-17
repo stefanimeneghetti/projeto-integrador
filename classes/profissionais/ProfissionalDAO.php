@@ -15,6 +15,16 @@
                 $query = $this->db_connection->prepare("select * from profissionais where ativo=1");
                 $query->execute();
                 $data = $query->fetchAll(PDO::FETCH_CLASS, "Profissional");
+                require_once "./classes/servicos/Servico.php";
+                for($i = 0; $i < count($data); $i++)
+                {
+                    $query = $this->db_connection->prepare("select * from servicos, (select * from capacitacao_profissionais where profissional = :email) s where servicos.id = s.servico");
+                    $email = $data[$i]->getEmail();
+                    $query->bindParam(":email", $email);
+                    $query->execute();
+                    $servicos = $query->fetchAll(PDO::FETCH_CLASS, "Servico");
+                    $data[$i]->setServicos($servicos);
+                }
                 return $data;
             }
             catch(PDOException $e){
@@ -28,6 +38,16 @@
                 $query->bindParam(":email", $email);
                 $query->execute();
                 $data = $query->fetchAll(PDO::FETCH_CLASS, "Profissional");
+                if(is_null($data[0]))
+                return $data[0];
+                require_once "./classes/servicos/Servico.php";
+                $query = $this->db_connection->prepare("select * from servicos, (select * from capacitacao_profissionais where profissional = :email) s where servicos.id = s.servico");
+                $email = $data[0]->getEmail();
+                $query->bindParam(":email", $email);
+                $query->execute();
+                $servicos = $query->fetchAll(PDO::FETCH_CLASS, "Servico");
+                $data[0]->setServicos($servicos);
+
                 return $data[0];
             }
             catch(PDOException $e){
@@ -68,9 +88,7 @@
 
         public function delete($email) {
             try{
-                $query = $this->db_connection->prepare("delete from capacitacao_profissionais where profissional=:email");
-                $query->bindParam(":email", $email);
-                $result = $query->execute();
+                $this->removeServicos($email);
                 $query = $this->db_connection->prepare("delete from profissionais where email=:email");
                 $query->bindParam(":email", $email);
                 $result = $query->execute();
@@ -84,5 +102,11 @@
             catch(PDOException $e){
                 echo "Erro no acesso aos dados: ". $e->getMessage();
             }
+        }
+
+        public function removeServicos($email) {
+            $query = $this->db_connection->prepare("delete from capacitacao_profissionais where profissional=:email");
+            $query->bindParam(":email", $email);
+            $query->execute();
         }
     }
