@@ -14,4 +14,4 @@ include_once("views/layout/header.php");
     </main>
 <?php
 include_once("views/layout/footer.php");
-?>  
+?>

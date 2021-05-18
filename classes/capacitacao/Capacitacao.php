@@ -21,13 +21,15 @@ class Capacitacao
         $this->servico = $servico;
     }
 
-    public function validate(){
+    // novo deve ser true caso a validação em questão esteja sendo feita para um
+    // profissional ainda não existente no BD.
+    public function validate($novo){
         require_once "./classes/profissionais/ProfissionalDAO.php";
         require_once "./classes/servicos/ServicoDAO.php";
         $erros = array();
         $profissional = (new ProfissionalDAO())->findOne($this->getProfissional());
         $servico = (new ServicoDAO())->findOne($this->getServico());
-        if(is_null($profissional) || $profissional->getAtivo() == 0)
+        if((is_null($profissional) || $profissional->getAtivo() == 0) && !$novo)
             $erros[] = "Profissional não encontrado";
         if(is_null($servico))
             $erros[] = "Serviço não encontrado";

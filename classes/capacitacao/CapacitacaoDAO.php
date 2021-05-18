@@ -26,14 +26,14 @@
             }
         }
 
-        public function findByProfissional($emailProfissional) {
+        public function findByProfessional($idProfissional) {
             try{
                 $query = $this->db_connection->prepare("select  
                                     s.nome , s.id as id from
                                     profissionais p join capacitacao_profissionais c 
-                                    on p.email = c.profissional join servicos s on
-                                    c.servico = s.id where c.profissional=:emailProfissional");
-                $query->bindParam(":emailProfissional", $emailProfissional);
+                                    on p.id = c.profissional join servicos s on
+                                    c.servico = s.id where c.profissional=:idProfissional");
+                $query->bindParam(":idProfissional", $idProfissional);
                 $query->execute();
                 $data = $query->fetchAll(PDO::FETCH_ASSOC);
                 return $data;
@@ -45,7 +45,7 @@
 
         public function findByServico($idServico) {
             try{
-                $query = $this->db_connection->prepare("select p.nome, p.email from
+                $query = $this->db_connection->prepare("select p.nome, p.email, p.id from
                                                 profissionais p join capacitacao_profissionais c 
                                                 on p.email = c.profissional join servicos s on
                                                 c.servico = s.id where c.servico=:idServico and p.ativo = 1");

@@ -2,6 +2,7 @@
 
 class Profissional
 {
+    private $id;
     private $email;
     private $nome;
     private $senha;
@@ -10,6 +11,14 @@ class Profissional
     private $endereco;
     private $ativo;
     private $servicos;
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
 
     public function getEmail(){
         return $this->email;
@@ -98,7 +107,7 @@ class Profissional
         if(preg_match("/[^\p{L}\s'-]+/i", $this->getNome()))
             $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas, ' e -";
         if(preg_match("/[^\d]+/", $this->getTelefone()))
-            $erros[] = "Caracteres inválidos no campo telefone. Utilize apenas números";
+            $erros[] = "Caracteres inválidos no campo telefone.".$this->getTelefone()." Utilize apenas números";
         if(!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL))
             $erros[] = "Campo email inválido";
         if(preg_match("/[^\p{L}]\d\s\-\(\)]+/i", $this->getEndereco()))
@@ -110,7 +119,7 @@ class Profissional
         if(strlen($this->getTelefone()) > 15)
             $erros[] = "Campo telefone muito longo. Máximo de 15 caracteres";
         if(strlen($this->getTelefone()) < 8)
-            $erros[] = "Campo telefone muito curto. Mínimo de 8 caracteres";
+            $erros[] = "Campo telefone ".$this->getTelefone()."muito curto. Mínimo de 8 caracteres";
         if(strlen($this->getEndereco()) > 250)
             $erros[] = "Campo endereço muito longo. Máximo de 250 caracteres";
         if(strlen($this->getEmail()) > 254)

@@ -18,9 +18,9 @@
                 require_once "./classes/servicos/Servico.php";
                 for($i = 0; $i < count($data); $i++)
                 {
-                    $query = $this->db_connection->prepare("select * from servicos, (select * from capacitacao_profissionais where profissional = :email) s where servicos.id = s.servico");
-                    $email = $data[$i]->getEmail();
-                    $query->bindParam(":email", $email);
+                    $query = $this->db_connection->prepare("select * from servicos, (select * from capacitacao_profissionais where profissional = :id) s where servicos.id = s.servico");
+                    $id = $data[$i]->getId();
+                    $query->bindParam(":id", $id);
                     $query->execute();
                     $servicos = $query->fetchAll(PDO::FETCH_CLASS, "Servico");
                     $data[$i]->setServicos($servicos);
@@ -38,12 +38,12 @@
                 $query->bindParam(":email", $email);
                 $query->execute();
                 $data = $query->fetchAll(PDO::FETCH_CLASS, "Profissional");
-                if(is_null($data[0]))
-                return $data[0];
+                if(count($data) == 0)
+                    return null;
                 require_once "./classes/servicos/Servico.php";
-                $query = $this->db_connection->prepare("select * from servicos, (select * from capacitacao_profissionais where profissional = :email) s where servicos.id = s.servico");
-                $email = $data[0]->getEmail();
-                $query->bindParam(":email", $email);
+                $query = $this->db_connection->prepare("select * from servicos, (select * from capacitacao_profissionais where profissional = :id) s where servicos.id = s.servico");
+                $id = $data[0]->getId();
+                $query->bindParam(":id", $id);
                 $query->execute();
                 $servicos = $query->fetchAll(PDO::FETCH_CLASS, "Servico");
                 $data[0]->setServicos($servicos);

@@ -13,7 +13,7 @@ class profissionaisController {
         $profissional->setConfirmaSenha($_POST["password-confirm"]);
         $profissional->setEmail($_POST["email"]);
         $profissional->setEndereco($_POST["address"]);
-        $profissional->setTelefone($_POST["phone"]);
+        $profissional->setTelefone(preg_replace('/[\(\)\-\s]/', '', $_POST["phone"]));
         $profissional->setAtivo(1);
 
         $erros = $profissional->validate(null);
@@ -28,9 +28,10 @@ class profissionaisController {
                 $capacitation->setProfissional($professionalEmail);
                 $capacitation->setServico($serviceId);
                 $capacitacoesValidadas[] = $capacitation;
-                $erros = array_merge($erros, $capacitation->validate());
+                $erros = array_merge($erros, $capacitation->validate(true));
             }
         }
+
         if(count($erros) != 0) {
             include "views/layout/header.php";
             include "views/layout/side-bar.php";?>
@@ -58,7 +59,7 @@ class profissionaisController {
 
         $db = new CapacitacaoDAO();
         foreach ($professionals as $professional) {
-            $services = $db->findByProfissional($professional->getEmail());
+            $services = $db->findByProfessional($professional->getId());
             $professional->setServicos($services);
         }
 
@@ -66,6 +67,7 @@ class profissionaisController {
     }
 
     public function deleteProfessional($email){
+        require_once("./classes/profissionais/ProfissionalDAO.php");
         $db = new ProfissionalDAO();
         $db->delete($email);
         header('Location: index.php?acao=profissionais/listar');
@@ -92,11 +94,11 @@ class profissionaisController {
             $profissional->setConfirmaSenha($_POST["password-confirm"]);
             $profissional->setEmail($_POST["email"]);
             $profissional->setEndereco($_POST["address"]);
-            $profissional->setTelefone($_POST["phone"]);
+            $profissional->setTelefone(preg_replace('/[\(\)\-\s]/', '', $_POST["phone"]));
             $profissional->setAtivo(1);
             $erros = $profissional->validate($email);
             $capacitacoesValidadas = array();
-            foreach($_POST as $key => $value) { 
+            foreach($_POST as $key => $value) {
                 if (explode("-",$key)[0] == "serviceSelected"){
                     $serviceId = explode("-",$key)[1];
                     $professionalEmail = $profissional->getEmail();
@@ -105,7 +107,7 @@ class profissionaisController {
                     $capacitation->setProfissional($professionalEmail);
                     $capacitation->setServico($serviceId);
                     $capacitacoesValidadas[] = $capacitation;
-                    $erros = array_merge($erros, $capacitation->validate());
+                    $erros = array_merge($erros, $capacitation->validate(false));
                 }
             }
             if(count($erros) != 0) {

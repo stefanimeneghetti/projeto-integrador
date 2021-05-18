@@ -36,6 +36,28 @@ function showListItemDetails() {
     }
 }
 
+function prettyPrintPhone(phone) {
+    phone = phone.replaceAll(/[^0-9]/g, '');
+    if(phone.length > 14)
+        phone = phone.substring(phone.length - 14, phone.length);
+    if(phone.length == 9 || phone.length == 11 || phone.length == 14)
+    {
+        phone = phone.substring(0, phone.length - 4) + "-" + phone.substring(phone.length - 4);
+        phone = phone.substring(0, phone.length - 10) + ") " + phone.substring(phone.length - 10, phone.length);        
+        if(phone.length > 13)
+            phone = phone.substring(0, phone.length - 14) + "(" + phone.substring(phone.length - 14, phone.length);
+    }
+    else {
+        if(phone.length > 4)
+            phone = phone.substring(0, phone.length - 4) + "-" + phone.substring(phone.length - 4);
+        if(phone.length > 9)
+            phone = phone.substring(0, phone.length - 9) + ") " + phone.substring(phone.length - 9, phone.length);        
+        if(phone.length >= 13)
+            phone = phone.substring(0, phone.length - 13) + "(" + phone.substring(phone.length - 13, phone.length);
+    }
+    return phone;
+}
+
 openSidebar();
 openSidebarDropdowns();
 showListItemDetails();
