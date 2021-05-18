@@ -47,7 +47,9 @@ function addAllServices() {
     for (let i = 1; i < select.options.length; i++) {
         const selected = select.options[i];
         const newService = createServiceItem(selected);
-        selectedServicesDiv.appendChild(newService);
+        const pastSelected = document.querySelector("#serviceSelected-"+selected.value);
+        if (pastSelected == undefined)
+            selectedServicesDiv.appendChild(newService);
     }
 }
 

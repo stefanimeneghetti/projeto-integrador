@@ -12,7 +12,7 @@
 
         public function all() {
             try{
-                $query = $this->db_connection->prepare("select * from servicos");
+                $query = $this->db_connection->prepare("select * from servicos where ativo=1");
                 $query->execute();
                 $data = $query->fetchAll(PDO::FETCH_CLASS, "Servico");
                 return $data;
@@ -37,11 +37,12 @@
 
         public function create (Servico $servico) {
             try{
-                $query = $this->db_connection->prepare("insert into servicos (nome, duracao, preco, descricao) values (:n, :t, :p, :d)");
+                $query = $this->db_connection->prepare("insert into servicos (nome, duracao, preco, descricao, ativo) values (:n, :t, :p, :d, :a)");
                 $query->bindValue(":n", $servico->getNome());
                 $query->bindValue(":t", $servico->getDuracao());
                 $query->bindValue(":p", $servico->getPreco());
                 $query->bindValue(":d", $servico->getDescricao());
+                $query->bindValue(":a", 1);
                 return $query->execute();
             }
             catch(PDOException $e){
@@ -63,7 +64,14 @@
             try{
                 $query = $this->db_connection->prepare("delete from servicos where id=:id");
                 $query->bindParam(":id", $id, PDO::PARAM_INT);
-                return $query->execute();
+                $result = $query->execute();
+
+                if($result != true) {
+                    $query = $this->db_connection->prepare("update profissionais set ativo=0 where id=:id");
+                    $query->bindParam(":id", $id, PDO::PARAM_INT);
+                    $result = $query->execute();
+                }
+                return $result;
             }
             catch(PDOException $e){
                 echo "Erro no acesso aos dados: ". $e->getMessage();

@@ -1,16 +1,23 @@
+<?php
+    $nome = isset($_POST['name']) ? $_POST['name'] : $service->getNome();
+    $preco = isset($_POST['price']) ? $_POST['price'] : $service->getPreco();
+    $duracao = isset($_POST['estimated-time']) ? $_POST['estimated-time'] : $service->getDuracao();
+    $descricao = isset($_POST['description']) ? $_POST['description'] : $service->getDescricao();
+
+?>
 <div class="small-title">Editar serviço</div>
 <div class="page-content">
     <div class="small-title">Editar serviço <hr></div>
-    <form method="post">
+    <form method="post" action="profissionaisController.php?acao=editar/">
         <span class="labeled-input ">
-            <input id="name" name="name" class="full-width" type="text" required>
+            <input id="name" name="name" class="full-width" type="text" required value="<?php echo $nome ?>">
             <label for="name">
                 Nome
             </label>
         </span>
         <div class="form-line">
             <span class="labeled-input">
-                <input id="price" name="price" class="half-width" type="text" required>
+                <input id="price" name="price" class="half-width" type="text" required value="<?php echo $preco ?>">
                 <label for="price">
                     Preço
                 </label>
@@ -27,7 +34,7 @@
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="estimated-time" name="estimated-time" type="text" required>
+                <input id="estimated-time" name="estimated-time" type="text" required value="<?php echo $duracao ?>">
                 <label for="estimated-time">
                     Tempo estimado
                 </label>
@@ -35,7 +42,7 @@
         </div>
 
         <div class="labeled-input">
-            <textarea id="description" name="description" class="full-width"></textarea>
+            <textarea id="description" name="description" class="full-width"> <?php echo $descricao ?></textarea>
             <label for="description">
                 Descrição
             </label>
@@ -55,13 +62,23 @@
                 <span class="btn btn--green">Adicionar todos os profissionais</span>
             </div>
         </span>
-        <span class="labeled-input">
-            <input type="text" style="pointer-events:none;" value="Fulaninho" readonly="readonly">
-            <span class="sqr-btn sqr-btn--red">X</span>
-        </span>
+        <div class="selected-professionals">
+            <!-- Serão adicionados via javascript -->
+        </div>
 
-        <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Salvar alterações"></div>
+        <div class="left-offset">
+        <?php
+            if (isset($erros) && count($erros) != 0) {
+                echo "<ul>";
+                foreach ($erros as $e)
+                    echo "<li>$e</li>";
+                echo "</ul>";
+            }            
+        ?></div>
+
+        <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Salvar alterações" name="altera"></div>
     </form>
 
 </div>
 <script src="assets/js/forms.js"></script>
+<script src="assets/js/servicos.js"></script>

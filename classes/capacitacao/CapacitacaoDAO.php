@@ -73,6 +73,17 @@
             }
         }
 
+        public function deleteByService($id) {
+            try{
+                $query = $this->db_connection->prepare("delete from capacitacao_profissionais where servico=:idServico");
+                $query->bindParam(":idServico", $id);
+                return $query->execute();
+            }
+            catch(PDOException $e){
+                echo "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+
         public function delete($emailProfissional, $idServico) {
             try{
                 $query = $this->db_connection->prepare("delete from capacitacao_profissionais where servico=:idServico and profissional=:emailProfissional");

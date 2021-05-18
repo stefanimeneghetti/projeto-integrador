@@ -29,8 +29,8 @@
                         </div>
                     </div>
                     <div class="details__actions">
-                        <button class="btn btn--green align-right"><a href="index.php?acao=servicos/editar">Editar</a></button>
-                        <button class="btn btn--red align-right">Excluir</button>
+                        <button class="btn btn--green align-right"><a href="servicosController.php?acao=editar/<?php echo $service->getId(); ?>">Editar</a></button>
+                        <button class="btn btn--red align-right"><a href="servicosController.php?acao=excluir/<?php echo $service->getId(); ?>">Excluir</a></button>
                     </div>
                 </div>
             </div>

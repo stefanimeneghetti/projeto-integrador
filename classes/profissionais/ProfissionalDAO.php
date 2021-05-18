@@ -97,7 +97,7 @@
                     $query->bindParam(":email", $email);
                     $result = $query->execute();
                 }
-                return $query->execute();
+                return $result;
             }
             catch(PDOException $e){
                 echo "Erro no acesso aos dados: ". $e->getMessage();

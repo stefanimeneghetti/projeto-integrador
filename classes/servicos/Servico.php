@@ -6,6 +6,7 @@ class Servico
     private $duracao;
     private $preco;
     private $descricao;
+    private $ativo;
     private $profissionais;
 
     public function getId() {
@@ -48,6 +49,14 @@ class Servico
         $this->descricao = $descricao;
     }
 
+    public function getAtivo() {
+        return $this->ativo;
+    }
+
+    public function setAtivo($ativo) {
+        $this->ativo = $ativo;
+    }
+
     public function getProfissionais() {
         return $this->profissionais;
     }
@@ -79,4 +88,5 @@ class Servico
             $erros[] = "Campo descrição muito grande. Máximo de 250 caracteres.";
         return $erros;
     }     
+
 }
