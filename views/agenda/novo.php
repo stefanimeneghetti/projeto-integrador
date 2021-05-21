@@ -4,13 +4,13 @@
     <form method="post">
         <div class="form-line">
             <span class="labeled-input ">
-                <input id="name" name="name" class="full-width" type="text" required>
+                <input id="name" name="name" class="full-width" type="text">
                 <label for="name">
                     Nome do cliente
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="phone" name="phone" type="tel" required>
+                <input id="phone" name="phone" type="tel">
                 <label for="phone">
                     Telefone
                 </label>

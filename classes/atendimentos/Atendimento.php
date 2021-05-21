@@ -12,6 +12,9 @@ class Atendimento {
     private $profissional;
     private $servico;
 
+    private $data_formatada;
+    private $horario_formatado;
+
 
     public function getId()
     {
@@ -23,7 +26,8 @@ class Atendimento {
         $this->id = $id;
     }
 
-    public function getData()
+    // retorna DD/MM/AAAA HH:MM:SS
+    public function getFullDate()
     {
         return $this->data;
     }
@@ -31,6 +35,8 @@ class Atendimento {
     public function setData($data)
     {
         $this->data = $data;
+        $this->data_formatada = preg_match("/\d{1,2}\/\d{1,2}\/\d{1,2}/", $data);
+        $this->horario_formatado = preg_match("/\d{1,2}:\d{1,2}/", $data);
     }
 
     public function getPreco()
@@ -103,18 +109,52 @@ class Atendimento {
         $this->servico = $servico;
     }
 
+    // retorna HH:MM
+    public function getFormattedTime()
+    {
+        return $this->horario_formatado;
+    }
+
+    public function setFormattedTime($horario)
+    {
+        $this->horario_formatado = $horario;
+        if(isset($this->data))
+            $this->data = preg_match("/\d{1,2}\/\d{1,2}\/\d{1,2}/", $this->data) . " " . $horario;
+    }
+
+    public function setFormattedDate($data)
+    {
+        $this->data_formatada = $data;
+        if(isset($this->data))
+            $this->data = $data . " " .preg_match("/\d{1,2}:\d{1,2}/", $this->data);
+    }
+
+    // retorna DD//MM//AAAA
+    public function getFormattedDate()
+    {
+        return $this->data_formatada;
+    }
+
+    public function setSplitDate($data, $time)
+    {
+        $this->data_formatada = $data;
+        $this->horario_formatado = $time;
+        $this->data = $data . " " . $time;
+    }
+
+
     public function validate(){
         $erros = array();
         // TODO validar serviço e profissional associado.
 
         // vazios
-        if(empty($this->getData()))
+        if(empty($this->getFormattedDate()))
             $erros[] = "É necessário informar uma data";
         if(empty($this->getPreco()))
             $erros[] = "É necessário informar um preço";
 
         // característicos
-        $data = explode("-", $this->getData());
+        $data = explode("-", $this->getFormattedDate());
         if(!checkDate($data[1], $data[0], $data[2]))
             $erros[] = "Campo data inválido";
         if(preg_match("/\d*/", $this->getQuantidade_paga()))
