@@ -5,6 +5,7 @@ class Cliente
     private $id;
     private $nome;
     private $telefone;
+    private $historico;
 
     public function getId() {
         return $this->id;
@@ -30,15 +31,23 @@ class Cliente
         $this->telefone = $telefone;
     }
 
+    public function getHistorico() {
+        return $this->historico;
+    }
+
+    public function setHistorico($historico) {
+        $this->historico = $historico;
+    }
+
     public function validate(){
         $erros = array();
         if(empty($this->getNome()))
             $erros[] = "É necessário informar um nome";
         if(empty($this->getTelefone()))
             $erros[] = "É necessário informar um telefone";
-        if(preg_match("/[a-zA-Z\s]*/i", $this->getNome()))
+        if(preg_match("/[^\p{L}\s'\-]/i", $this->getNome()))
             $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas";
-        if(preg_match("/\d*/i", $this->getTelefone()))
+        if(preg_match("/[^\d]/i", $this->getTelefone()))
             $erros[] = "Caracteres inválidos no campo telefone. Utilize apenas números";
         if(strlen($this->getNome()) > 50)
             $erros[] = "Campo nome muito longo. Máximo de 50 caracteres";

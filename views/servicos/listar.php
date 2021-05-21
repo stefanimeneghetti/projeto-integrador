@@ -2,7 +2,7 @@
     include_once("./servicosController.php");
     $serviceController = new servicosController();
     $services = $serviceController->getServices();
-
+    include_once("./utilidades.php");
 ?>
 
 <h1 class="small-title">Listar Serviços</h1>
@@ -18,8 +18,9 @@
                 <div class="list-item__name"><?php  echo $service->getNome() ?></div>
                 <div class="list-item__show-details">&#9660;</div>
                 <div class="list-item__details">
-                    <div class="details__price"><strong>Preço: </strong>R$ <?php  echo $service->getPreco() ?></div>
-                    <div class="details__description"><strong>Descrição:</strong> <?php  echo $service->getDescricao() ?>.</div>
+                    <div class="details__price"><strong>Preço: </strong>R$ <?php  echo prettyPrintPrice($service->getPreco()) ?></div>
+                    <div class="details__description"><strong>Duração estimada:</strong> <?php  echo prettyPrintTime($service->getDuracao()) ?></div>
+                    <?php if(!empty($service->getDescricao())) {?><div class="details__description"><strong>Descrição:</strong> <?php  echo $service->getDescricao() ?>.</div><?php }?>
                     <div class="details__professionals">
                         <small>Profissionais (<?php  echo count($service->getProfissionais()) ?>)</small>
                         <div class="professionals__list">

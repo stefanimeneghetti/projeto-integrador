@@ -36,19 +36,42 @@
             try{
                 $query = $this->db_connection->prepare("select * from profissionais where email=:email");
                 $query->bindParam(":email", $email);
+                $query->setFetchMode(PDO::FETCH_CLASS, 'Profissional'); 
                 $query->execute();
-                $data = $query->fetchAll(PDO::FETCH_CLASS, "Profissional");
-                if(count($data) == 0)
+                $data = $query->fetch(PDO::FETCH_CLASS, PDO::FETCH_ORI_NEXT, 0);
+                if(!$data)
                     return null;
                 require_once "./classes/servicos/Servico.php";
                 $query = $this->db_connection->prepare("select * from servicos, (select * from capacitacao_profissionais where profissional = :id) s where servicos.id = s.servico");
-                $id = $data[0]->getId();
+                $id = $data->getId();
                 $query->bindParam(":id", $id);
                 $query->execute();
                 $servicos = $query->fetchAll(PDO::FETCH_CLASS, "Servico");
-                $data[0]->setServicos($servicos);
+                $data->setServicos($servicos);
 
-                return $data[0];
+                return $data;
+            }
+            catch(PDOException $e){
+                echo "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+        public function findById($id) {
+            try{
+                $query = $this->db_connection->prepare("select * from profissionais where id=:id");
+                $query->bindParam(":id", $id);
+                $query->setFetchMode(PDO::FETCH_CLASS, 'Profissional'); 
+                $query->execute();
+                $data = $query->fetch(PDO::FETCH_CLASS, PDO::FETCH_ORI_NEXT, 0);
+                if(!$data)
+                    return null;
+                require_once "./classes/servicos/Servico.php";
+                $query = $this->db_connection->prepare("select * from servicos, (select * from capacitacao_profissionais where profissional = :id) s where servicos.id = s.servico");
+                $query->bindParam(":id", $id);
+                $query->execute();
+                $servicos = $query->fetchAll(PDO::FETCH_CLASS, "Servico");
+                $data->setServicos($servicos);
+
+                return $data;
             }
             catch(PDOException $e){
                 echo "Erro no acesso aos dados: ". $e->getMessage();
@@ -86,15 +109,15 @@
             return $query->execute();
         }
 
-        public function delete($email) {
+        public function delete($id) {
             try{
-                $this->removeServicos($email);
-                $query = $this->db_connection->prepare("delete from profissionais where email=:email");
-                $query->bindParam(":email", $email);
+                $this->removeServicos($id);
+                $query = $this->db_connection->prepare("delete from profissionais where id=:id");
+                $query->bindParam(":id", $id);
                 $result = $query->execute();
                 if($result != true) {
-                    $query = $this->db_connection->prepare("update profissionais set ativo=0 where email=:email");
-                    $query->bindParam(":email", $email);
+                    $query = $this->db_connection->prepare("update profissionais set ativo=0 where id=:id");
+                    $query->bindParam(":id", $id);
                     $result = $query->execute();
                 }
                 return $result;
@@ -104,9 +127,9 @@
             }
         }
 
-        public function removeServicos($email) {
-            $query = $this->db_connection->prepare("delete from capacitacao_profissionais where profissional=:email");
-            $query->bindParam(":email", $email);
+        public function removeServicos($id) {
+            $query = $this->db_connection->prepare("delete from capacitacao_profissionais where profissional=:id");
+            $query->bindParam(":id", $id);
             $query->execute();
         }
     }

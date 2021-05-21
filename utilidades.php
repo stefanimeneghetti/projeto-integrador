@@ -1,4 +1,6 @@
 <?php
+
+    // formata valores do banco em um formato amigável.
     function prettyPrintPhone($phone)
     {
         $formattedPhone = substr($phone, 0, (strlen($phone) - 4)) .
@@ -21,4 +23,15 @@
         }
         return $formattedPhone;
     }
+
+    // formata valores do banco em um formato amigável. ignora segundos
+    function prettyPrintTime($time) {
+        return substr($time, 0, -3);
+    }
+
+    // formata valores do banco em um formato amigável. ignora segundos
+    function prettyPrintPrice($price) {
+        return strlen($price) > 2 ? str_replace(".", ",", $price) : $price;
+    }
+
 ?>

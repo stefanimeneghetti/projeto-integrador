@@ -1,4 +1,7 @@
 <?php
+    require_once("./classes/profissionais/ProfissionalDAO.php");
+    $db = new ProfissionalDAO();
+    $professionals = $db->all();
     $nome = isset($_POST['name']) ? $_POST['name'] : $service->getNome();
     $preco = isset($_POST['price']) ? $_POST['price'] : $service->getPreco();
     $duracao = isset($_POST['estimated-time']) ? $_POST['estimated-time'] : $service->getDuracao();
@@ -8,7 +11,7 @@
 <div class="small-title">Editar serviço</div>
 <div class="page-content">
     <div class="small-title">Editar serviço <hr></div>
-    <form method="post" action="profissionaisController.php?acao=editar/">
+    <form method="post" action="servicosController.php?acao=editar/<?php echo $service->getId()?>">
         <span class="labeled-input ">
             <input id="name" name="name" class="full-width" type="text" required value="<?php echo $nome ?>">
             <label for="name">
@@ -51,15 +54,15 @@
         <br><div><b>Associar profissionais:</b></div><br>
         <span class="labeled-input">
             <div class="form-line">
-                <select id="services" name="services" class="half-width">
+                <select id="professionals" name="professionals" class="half-width">
                     <option hidden disabled selected value></option>
-                    <option value="5">Fulaninho</option>
-                    <option value="2">Fulaninha</option>
-                    <option value="3">Juquinha</option>
+                    <?php if(isset($professionals))foreach ($professionals as $professional) { ?>
+                    <option value="<?php echo $professional->getId() ?>"><?php echo $professional->getNome() ?></option>
+                    <?php } ?>
                 </select>
-                <label for="services">Selecionar profissional</label>
-                <span class="btn btn--green">Adicionar</span>
-                <span class="btn btn--green">Adicionar todos os profissionais</span>
+                <label for="professionals">Selecionar profissional</label>
+                <span class="btn btn--green" onclick="addProfessional()">Adicionar</span>
+                <span class="btn btn--green" onclick="addAllProfessionals()">Adicionar todos os profissionais</span>
             </div>
         </span>
         <div class="selected-professionals">

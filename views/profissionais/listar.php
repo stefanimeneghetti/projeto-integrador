@@ -16,7 +16,7 @@
 
         <?php foreach($professionals as $professional){ ?>
             <div class="list__list-item">
-            
+
                 <div class="list-item__name"><?php echo $professional->getNome() ?></div>
                 <div class="list-item__show-details">&#9660;</div>
                 <div class="list-item__details">
@@ -38,7 +38,7 @@
                     
                     <div class="details__actions">
                         <button class="btn btn--green align-right"><a href="profissionaisController.php?acao=editar/<?php echo $professional->getEmail(); ?>">Editar</a></button>
-                        <button class="btn btn--red align-right" onclick="setModalValue('<?=$professional->getEmail()?>')">Excluir</button>
+                        <button class="btn btn--red align-right" onclick="setModalValue('profissionaisController.php?acao=excluir/<?=$professional->getId()?>')">Excluir</button>
                     </div>
                 </div>
             </div>

@@ -25,10 +25,13 @@
         public function findOne($id) {
             try{
                 $query = $this->db_connection->prepare("select * from servicos where id=:id");
-                $query->bindParam(":id", $id, PDO::PARAM_INT);
+                $query->bindParam(":id", $id);
+                $query->setFetchMode(PDO::FETCH_CLASS, "Servico");
                 $query->execute();
-                $data = $query->fetchAll(PDO::FETCH_CLASS, "Servico");
-                return $data[0];
+                $data = $query->fetch(PDO::FETCH_CLASS, PDO::FETCH_ORI_NEXT, 0);
+                if(!$data)
+                    return null;
+                return $data;
             }
             catch(PDOException $e){
                 echo "Erro no acesso aos dados: ". $e->getMessage();

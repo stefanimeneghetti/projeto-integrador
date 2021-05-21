@@ -7,17 +7,31 @@ require_once "./classes/capacitacao/CapacitacaoDAO.php";
 
 class servicosController {
     public function newService(){
+
         $service = new Servico();
         $service->setNome($_POST["name"]);
-        $service->setPreco((int) str_replace(',', '.', $_POST["price"]));
-        $service->setDuracao($_POST["estimated-time"]);
+        $service->setPreco(str_replace(",",".", preg_replace("/[R\$\s]/", "", $_POST["price"]))); 
+        $service->setDuracao((strlen($_POST["estimated-time"]) > 3? $_POST["estimated-time"] : ("0:" . $_POST["estimated-time"])) . ":00");
         $service->setDescricao($_POST["description"]);
         $service->setAtivo(1);
 
         $errors = $service->validate();
+                
+        $capacitacoesValidadas = array();
+        foreach($_POST as $key => $value) { 
+            if (explode("-",$key)[0] == "professionalSelected"){
+                $serviceId = $service->getId();
+                $professionalEmail = explode("-",$key)[1];
+                
+                $capacitation = new Capacitacao();
+                $capacitation->setProfissional($professionalEmail);
+                $capacitation->setServico($serviceId);
+                $capacitacoesValidadas[] = $capacitation;
+                $errors = array_merge($errors, $capacitation->validate(true));
+            }
+        }
 
         // TODO: Adicionar o serviço com os profissionais na tabela de capacitação
-        $errors = []; //! Apagar quando as validações forem corrigidas :)
         if(count($errors) != 0) {
             include "views/layout/header.php";
             include "views/layout/side-bar.php";?>
@@ -30,10 +44,12 @@ class servicosController {
         {
             $db = new ServicoDAO();
             $db->create($service);
-            // foreach($capacitacoesValidadas as $val) {
-            //     $db = new CapacitacaoDAO();
-            //     $db->create($val);
-            // }
+            $servico = $db->db_connection->lastInsertId();
+            foreach($capacitacoesValidadas as $val) {
+                $db2 = new CapacitacaoDAO();
+                $val->setServico($servico);
+                $db2->create($val);
+            }
 
             header('Location: index.php?acao=servicos/listar');
         }
@@ -45,7 +61,7 @@ class servicosController {
 
         $db = new CapacitacaoDAO();
         foreach ($services as $service) {
-            $id = (int) $service->getId();
+            $id = $service->getId();
             $professionals = $db->findByServico($id);
             $service->setProfissionais($professionals);
         }
@@ -54,20 +70,19 @@ class servicosController {
     }
 
     public function deleteService($id){
+        $db = new CapacitacaoDAO();
+        $db->deleteByService($id);
         $db = new ServicoDAO();
         $db->delete($id);
 
-        $db = new CapacitacaoDAO();
-        $db->deleteByService($id);
         header('Location: index.php?acao=servicos/listar');
     }
 
     public function editService($id) {
+        $db = new ServicoDAO();
+        $service = $db->findOne($id);
         if(!isset($_POST['altera']))
         {
-            $db = new ServicoDAO();
-            $service = $db->findOne($id);
-            
             include_once "views/layout/header.php";
             include_once "views/layout/side-bar.php";?>
             <main>
@@ -77,10 +92,28 @@ class servicosController {
         }
         else
         {
-            $servico = new servico();
+            $servico = new Servico();
+            $servico->setId($id);
             $servico->setNome($_POST["name"]);
-            $erros = $servico->validate($email);
-            // TODO: Adicionar o serviço com os profissionais na tabela de capacitação
+            $servico->setPreco(str_replace(",",".", preg_replace("/[R\$\s]/", "", $_POST["price"]))); 
+            $servico->setDuracao((strlen($_POST["estimated-time"]) > 3? $_POST["estimated-time"] : ("0:" . $_POST["estimated-time"])) . ":00");
+            $servico->setDescricao($_POST["description"]);
+            $servico->setAtivo(1);
+            $erros = $servico->validate();
+                
+            $capacitacoesValidadas = array();
+            foreach($_POST as $key => $value) { 
+                if (explode("-",$key)[0] == "professionalSelected"){
+                    $professionalEmail = explode("-",$key)[1];
+                    
+                    $capacitation = new Capacitacao();
+                    $capacitation->setProfissional($professionalEmail);
+                    $capacitation->setServico($id);
+                    $capacitacoesValidadas[] = $capacitation;
+                    $erros = array_merge($erros, $capacitation->validate(false));
+                }
+            }
+
             if(count($erros) != 0) {
                 include_once "views/layout/header.php";
                 include_once "views/layout/side-bar.php";?>
@@ -92,7 +125,12 @@ class servicosController {
             else
             {
                 $db = new ServicoDAO();
-                $db->update($servico, $id);
+                $db->update($servico);
+                $db = new CapacitacaoDAO();
+                $db->deleteByService($id);
+                foreach($capacitacoesValidadas as $val) {
+                    $db->create($val);
+                }
                 header('Location: index.php?acao=servicos/listar');
             }
         }

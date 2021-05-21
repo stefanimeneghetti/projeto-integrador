@@ -140,9 +140,25 @@ function prettyPrintPhone(phone) {
     return phone;
 }
 
+function prettyPrintPrice(price) {
+    price = price.replaceAll(/[^0-9]/g, '');
+    if(price.length > 2)
+        price = price.substring(0, price.length - 2) + "," + price.substring(price.length - 2, price.length);
+    if(price.length > 0)
+    price = "R$ "+ price;
+    return price;
+}
+
+function prettyPrintTime(time) {
+    time = time.replaceAll(/[^0-9]/g, '');
+    if(time.length > 2)  
+        time = time.substring(0, time.length - 2) + ":" + time.substring(time.length - 2, time.length);
+    return time;
+}
+
 function setModalValue(val) {
     modal = document.querySelector('.modal');
-    modal.action = "profissionaisController.php?acao=excluir/" + val;
+    modal.action = val;
     modal.parentElement.style.display = "flex";
 }
 
@@ -159,5 +175,20 @@ if(phoneField)
         e.target.value = prettyPrintPhone(e.target.value);
     });
 
+let priceField = document.querySelector("#price");
+if(priceField)
+    priceField.value = prettyPrintPrice(priceField.value);
+if(priceField)
+    priceField.addEventListener("input", function (e) {
+        e.target.value = prettyPrintPrice(e.target.value);
+    });
+
+let timeField = document.querySelector("#estimated-time");
+if(timeField)
+timeField.value = prettyPrintTime(timeField.value);
+if(timeField)
+timeField.addEventListener("input", function (e) {
+        e.target.value = prettyPrintTime(e.target.value);
+    });
 imageInput();
 fixPlaceholder();

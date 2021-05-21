@@ -104,9 +104,9 @@ class Profissional
         // característicos
         else if($this->getSenha() != $this->getConfirmaSenha())
             $erros[] = "Os campos senha e confirmar senha precisam sesr idênticos";
-        if(preg_match("/[^\p{L}\s'-]+/i", $this->getNome()))
+        if(preg_match("/[^\p{L}\s'-]/i", $this->getNome()))
             $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas, ' e -";
-        if(preg_match("/[^\d]+/", $this->getTelefone()))
+        if(preg_match("/[^\d]/", $this->getTelefone()))
             $erros[] = "Caracteres inválidos no campo telefone.".$this->getTelefone()." Utilize apenas números";
         if(!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL))
             $erros[] = "Campo email inválido";

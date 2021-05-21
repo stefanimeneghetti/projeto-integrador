@@ -19,14 +19,13 @@ class profissionaisController {
         $erros = $profissional->validate(null);
         
         $capacitacoesValidadas = array();
-        foreach($_POST as $key => $value) { 
-            if (explode("-",$key)[0] == "serviceSelected"){
+        foreach($_POST as $key => $value) {
+            if (explode("-", $key)[0] == "serviceSelected"){
                 $serviceId = explode("-",$key)[1];
-                $professionalEmail = $profissional->getEmail();
                 
                 $capacitation = new Capacitacao();
-                $capacitation->setProfissional($professionalEmail);
                 $capacitation->setServico($serviceId);
+                $capacitation->setProfissional(0);
                 $capacitacoesValidadas[] = $capacitation;
                 $erros = array_merge($erros, $capacitation->validate(true));
             }
@@ -44,8 +43,10 @@ class profissionaisController {
         {
             $db = new ProfissionalDAO();
             $db->create($profissional);
+            $profissionalId = $db->db_connection->lastInsertId();
             foreach($capacitacoesValidadas as $val) {
                 $db = new CapacitacaoDAO();
+                $val->setProfissional($profissionalId);
                 $db->create($val);
             }
 
@@ -101,10 +102,11 @@ class profissionaisController {
             foreach($_POST as $key => $value) {
                 if (explode("-",$key)[0] == "serviceSelected"){
                     $serviceId = explode("-",$key)[1];
-                    $professionalEmail = $profissional->getEmail();
+                    
+                    $professionalId = (new ProfissionalDAO())->findOne($email)->getId();
                     
                     $capacitation = new Capacitacao();
-                    $capacitation->setProfissional($professionalEmail);
+                    $capacitation->setProfissional($professionalId);
                     $capacitation->setServico($serviceId);
                     $capacitacoesValidadas[] = $capacitation;
                     $erros = array_merge($erros, $capacitation->validate(false));

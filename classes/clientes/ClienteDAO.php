@@ -1,6 +1,10 @@
 <?php
     require_once "./classes/connection.php";
     require_once "Cliente.php";
+    require_once "./classes/servicos/ServicoDAO.php";
+    require_once "./classes/servicos/Servico.php";
+    require_once "./classes/atendimentos/AtendimentoDAO.php";
+    require_once "./classes/atendimentos/Atendimento.php";
 
     class ClienteDAO{
         
@@ -26,9 +30,16 @@
             try{
                 $query = $this->db_connection->prepare("select * from clientes where id=:id");
                 $query->bindParam(":id", $id, PDO::PARAM_INT);
+                $query->setFetchMode(PDO::FETCH_CLASS, "Cliente");
                 $query->execute();
-                $data = $query->fetchAll(PDO::FETCH_CLASS, "Cliente");
-                return $data[0];
+                $data = $query->fetch(PDO::FETCH_CLASS, PDO::FETCH_ORI_NEXT, 0);
+
+                $query = $this->db_connection->prepare("select * from atendimentos where cliente=:id");
+                $query->bindParam(":id", $id, PDO::PARAM_INT);
+                $query->execute();
+                $appointments = $query->fetchAll(PDO::FETCH_CLASS, "Atendimento");
+                $data->setHistorico($appointments);
+                return $data;
             }
             catch(PDOException $e){
                 echo "Erro no acesso aos dados: ". $e->getMessage();

@@ -47,7 +47,7 @@
             try{
                 $query = $this->db_connection->prepare("select p.nome, p.email, p.id from
                                                 profissionais p join capacitacao_profissionais c 
-                                                on p.email = c.profissional join servicos s on
+                                                on p.id = c.profissional join servicos s on
                                                 c.servico = s.id where c.servico=:idServico and p.ativo = 1");
                 $query->bindParam(":idServico", $idServico, PDO::PARAM_INT);
                 $query->execute();
@@ -61,11 +61,11 @@
 
         public function create(Capacitacao $capacitacao) {
             try{
-                $query = $this->db_connection->prepare("insert into capacitacao_profissionais (profissional, servico) values (:emailProfissional, :idServico)");
+                $query = $this->db_connection->prepare("insert into capacitacao_profissionais (profissional, servico) values (:idProfissional, :idServico)");
                 $servico = $capacitacao->getServico();
-                $email =  $capacitacao->getProfissional();
+                $profissional =  $capacitacao->getProfissional();
                 $query->bindParam(":idServico", $servico);
-                $query->bindParam(":emailProfissional", $email);
+                $query->bindParam(":idProfissional", $profissional);
                 return $query->execute();
             }
             catch(PDOException $e){
