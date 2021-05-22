@@ -65,17 +65,11 @@ class atendimentosController {
         }
     }
 
-    public function getProfessionals() {
-        $db = new ProfissionalDAO();
-        $professionals = $db->all();
-
-        $db = new CapacitacaoDAO();
-        foreach ($professionals as $professional) {
-            $services = $db->findByProfessional($professional->getId());
-            $professional->setServicos($services);
-        }
-
-        return $professionals;
+    // recebe o dia no formato "Y-m-d" 
+    public function getAppointmentByDay($day) {
+        $db = new AtendimentoDAO();
+        $appointments = $db->getByDay($day);
+        return $appointments;
     }
 
     public function deleteAppointment($email){

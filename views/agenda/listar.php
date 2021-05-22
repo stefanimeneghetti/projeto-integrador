@@ -1,3 +1,11 @@
+<?php 
+    include_once "./atendimentosController.php";
+    $controller = new atendimentosController();
+    $day = strtotime('2021-05-20 15:00:00');
+    $day_string = date('Y-m-d');
+    $appointments = $controller->getAppointmentByDay($day_string);
+?>
+
 <h1 class="small-title">Agenda</h1>
 <div class="page-content">
     <div class="page-content__header">
@@ -6,22 +14,31 @@
     </div>
     <div class="schedule">
         <div class="schedule--day">
-            <div class="schedule__item">
-                <div class="item__time">
-                    08:30 - 30min
+            <?php if (count($appointments) == 0) {?>
+                <p>Nenhum atendimento registrado!</p>
+            <?php } ?>
+            <?php foreach ($appointments as $appointment) { ?>
+                <div class="schedule__item">
+                    <div class="item__time">
+                        <?= date("H:i",strtotime($appointment->getFullDate()))?> - <?= $appointment->getDuracao() ?>
+                    </div>
+                    <div class="item__service">
+                        <?= $appointment->getServico() ?>
+                    </div>
+                    <div class="item__client-and-price">
+                        <span class="client-and-price__client"><?= $appointment->getCliente() ?></span> -
+                        <span class="client-and-price__price">R$ <?= str_replace(".", ",", $appointment->getPreco()) ?></span>
+                    </div>
+                    <div class="item__professional">
+                        Profissional: <?= $appointment->getProfissional() ?>
+                    </div>
+                    <div class="item__actions">
+                        <button class="btn btn--green align-right">Efetuado</button>
+                        <button class="btn btn--red align-right"><a href="index.php?acao=agenda/editar">Mais Opções</a></button>
+                    </div>
                 </div>
-                <div class="item__service">
-                    Corte Padrão
-                </div>
-                <div class="item__client-and-price">
-                    <span class="client-and-price__client">Nome do cliente</span> -
-                    <span class="client-and-price__price">R$ 30,00</span>
-                </div>
-                <div class="item__actions">
-                    <button class="btn btn--green align-right">Efetuado</button>
-                    <button class="btn btn--red align-right"><a href="index.php?acao=agenda/editar">Mais Opções</a></button>
-                </div>
-            </div>
+            <?php } ?>
+            
         </div>
 
         <div class="schedule--month">

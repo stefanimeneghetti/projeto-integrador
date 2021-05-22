@@ -5,6 +5,7 @@ class Atendimento {
     private $id;
     private $data;
     private $preco;
+    private $duracao;
     private $descricao;
     private $quantidade_paga;
     private $cliente;
@@ -14,7 +15,6 @@ class Atendimento {
 
     private $data_formatada;
     private $horario_formatado;
-
 
     public function getId()
     {
@@ -142,6 +142,15 @@ class Atendimento {
         $this->data = $data . " " . $time;
     }
 
+    public function getDuracao() {
+        $time = explode(":", $this->duracao);
+        $formatted_time = $time[0]."h".$time[1]."min";
+        return $formatted_time;
+    }
+
+    public function setDuracao ($time) {
+        $this->duracao = $time;
+    }
 
     public function validate(){
         $erros = array();

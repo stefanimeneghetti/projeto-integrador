@@ -10,6 +10,30 @@
             $this->db_connection = Connection::connect();
         }
 
+        public function getByDay($day) {
+            try {
+                $query = $this->db_connection->prepare("select 
+                        a.data, a.preco, a.descricao, a.quantidade_paga,
+                        c.nome as cliente,
+                        status.descricao as status,
+                        p.nome as profissional,
+                        s.nome as servico, s.duracao
+                    from atendimentos a 
+                        join clientes c on a.cliente = c.id
+                        join status on status.id = a.status 
+                        join profissionais p on p.id = a.profissional 
+                        join servicos s on s.id = a.servico
+                    where data like :day order by data asc");
+                $query->bindValue(":day", $day.'%');
+                $query->execute();
+                $data = $query->fetchAll(PDO::FETCH_CLASS, 'Atendimento');
+                return $data;
+            }
+            catch(PDOException $e){
+                echo "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+
         public function create(Atendimento $atendimento) {
             try {
                 $query = $this->db_connection->prepare("insert into atendimentos 
