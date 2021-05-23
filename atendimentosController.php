@@ -1,5 +1,4 @@
 <?php 
-
 require_once "./classes/profissionais/Profissional.php";
 require_once "./classes/profissionais/ProfissionalDAO.php";
 require_once "./classes/capacitacao/Capacitacao.php";
@@ -17,6 +16,7 @@ class atendimentosController {
         }
         else {
             // tratar criação de cliente aqui
+            // verificar se o nome e tel do cliente passado é o mesmo nome do cliente do id. se for diferente, houve criação de cliente
         }
 
         // fazer tratamento do status aqui. fazer tratamento da qtd paga baseada no status

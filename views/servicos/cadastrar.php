@@ -25,17 +25,6 @@
                 </label>
             </span>
             <span class="labeled-input">
-                <select id="payment-method" name="payment-method" class="full-width" onchange="togglePriceFieldLock()" value="<?php echo $metodo_pagamento?>">
-                    <option hidden disabled selected value></option>
-                    <option value="1">Valor mínimo</option>
-                    <option value="2">Valor específico</option>
-                    <option value="3">À combinar</option>
-                </select>
-                <label for="payment-method">
-                    Formato do pagamento
-                </label>
-            </span>
-            <span class="labeled-input">
                 <input id="estimated-time" name="estimated-time" maxlength="5" value="<?php echo $duracao?>">
                 <label for="estimated-time">
                     Tempo estimado

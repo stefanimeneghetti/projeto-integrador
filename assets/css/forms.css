@@ -45,7 +45,7 @@
 }
 
 .labeled-input label {
-    transition: .5s ease;
+    transition: .4s ease;
     text-transform: uppercase;
     cursor: text;
     pointer-events: none;

@@ -35,8 +35,8 @@ class Atendimento {
     public function setData($data)
     {
         $this->data = $data;
-        $this->data_formatada = preg_match("/\d{1,2}\/\d{1,2}\/\d{1,2}/", $data);
-        $this->horario_formatado = preg_match("/\d{1,2}:\d{1,2}/", $data);
+        $this->data_formatada = date('n.j.Y', strtotime($data));
+        $this->horario_formatado = date("h:i", strtotime($data));
     }
 
     public function getPreco()
@@ -119,14 +119,14 @@ class Atendimento {
     {
         $this->horario_formatado = $horario;
         if(isset($this->data))
-            $this->data = preg_match("/\d{1,2}\/\d{1,2}\/\d{1,2}/", $this->data) . " " . $horario;
+            $this->data = preg_match("/\d{1,4}\-\d{1,2}\-\d{1,2}/", $this->data) . " " . $horario;
     }
 
     public function setFormattedDate($data)
     {
         $this->data_formatada = $data;
         if(isset($this->data))
-            $this->data = $data . " " .preg_match("/\d{1,2}:\d{1,2}/", $this->data);
+            $this->data = $data . " " .preg_match("/\d{1,2}:\d{1,2}:\d{1,2}/", $this->data);
     }
 
     // retorna DD//MM//AAAA

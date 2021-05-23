@@ -190,5 +190,16 @@ if(timeField)
 timeField.addEventListener("input", function (e) {
         e.target.value = prettyPrintTime(e.target.value);
     });
+
 imageInput();
 fixPlaceholder();
+
+function openClientsModal() {
+    modal = document.querySelector('.modal');
+    modal.parentElement.style.display = "flex";
+}
+
+function closeClientsModal() {
+    modalOverlay = document.querySelector(".modal-bg");
+    modalOverlay.style.display = "none";
+}
