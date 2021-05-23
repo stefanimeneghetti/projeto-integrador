@@ -139,21 +139,34 @@ class atendimentosController {
             }
         }
     }
+
+    public function getPossibleStatus() {
+        $db = new AtendimentoDAO();
+        $status = $db->getStatus();
+        return $status;
+    }
+
+    public function updateStatus($id) {
+        $db = new AtendimentoDAO();
+        $status = $_POST['appointmentStatus'];
+        $db->updateStatus($id, $status);
+        header('Location: index.php?acao=agenda/listar');
+    }
 }
 
 $action = explode("/", $_GET['acao']);
+$controller = new atendimentosController();
 switch($action[0]) {
     case 'excluir': 
         echo $action[1];
-        $controller = new atendimentosController();
         $controller->deleteAppointment($action[1]); 
         break;
     case 'cadastrar': 
-        $controller = new atendimentosController();
         $controller->newAppointment();
         break;
-    case 'editar': 
-        $controller = new atendimentosController();
+    case 'editar':
         $controller->editAppointment($action[1]);
         break;
+    case 'updateStatus':
+        $controller->updateStatus($action[1]);
 }

@@ -13,7 +13,7 @@
         public function getByDay($day) {
             try {
                 $query = $this->db_connection->prepare("select 
-                        a.data, a.preco, a.descricao, a.quantidade_paga,
+                        a.id, a.data, a.preco, a.descricao, a.quantidade_paga,
                         c.nome as cliente,
                         status.descricao as status,
                         p.nome as profissional,
@@ -28,6 +28,31 @@
                 $query->execute();
                 $data = $query->fetchAll(PDO::FETCH_CLASS, 'Atendimento');
                 return $data;
+            }
+            catch(PDOException $e){
+                echo "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+
+        public function getStatus() {
+            try{
+                $query = $this->db_connection->prepare("select * from status");
+                $query->execute();
+                $data = $query->fetchAll(PDO::FETCH_ASSOC);
+                return $data;
+            }
+            catch(PDOException $e){
+                echo "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+
+        public function updateStatus($id, $status) {
+            try {
+                $query = $this->db_connection->prepare("update atendimentos set
+                        status=:status where id=:id");
+                $query->bindValue(":status", $status);
+                $query->bindValue(":id", $id);
+                return $query->execute();
             }
             catch(PDOException $e){
                 echo "Erro no acesso aos dados: ". $e->getMessage();

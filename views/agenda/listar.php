@@ -4,6 +4,8 @@
     $day = strtotime('2021-05-20 15:00:00');
     $day_string = date('Y-m-d');
     $appointments = $controller->getAppointmentByDay($day_string);
+
+    $status = $controller->getPossibleStatus();
 ?>
 
 <h1 class="small-title">Agenda</h1>
@@ -33,8 +35,8 @@
                         Profissional: <?= $appointment->getProfissional() ?>
                     </div>
                     <div class="item__actions">
-                        <button class="btn btn--green align-right">Efetuado</button>
-                        <button class="btn btn--red align-right"><a href="index.php?acao=agenda/editar">Mais Opções</a></button>
+                        <button class="btn btn--green align-right"><?= $appointment->getStatus() ?></button>
+                        <button class="btn btn--red align-right" onclick="openModal(<?= $appointment->getId() ?>)">Mais Opções</button>
                     </div>
                 </div>
             <?php } ?>
@@ -70,4 +72,57 @@
     </div>
 </div>
 
+<div class="modal-bg">
+    <form class="modal" method="post" action="">
+        <div class="modal-close" onclick="closeModal()">X</div>
+        <label for="status">Selecionar estado do atendimento</label>
+        <span class="select">
+            <select id="status" name="appointmentStatus" class="">
+                <?php foreach ($status as $state) { ?>
+                    <option value="<?= $state['id'] ?>"><?= $state['descricao'] ?></option>
+                <?php } ?>
+            </select>
+        </span>
+        <input type="submit" class="btn btn--purple" value="Alterar Estado do Atendimento">
+    </form>
+</div>
+
 <script src="assets/js/agenda.js"></script>
+
+<script>
+function openModal(appointmentId, state) {
+    modal = document.querySelector('.modal');
+    modal.action = "atendimentosController.php?acao=updateStatus/"+appointmentId;
+    modal.parentElement.style.display = "flex";
+}
+
+function closeModal() {
+    modalOverlay = document.querySelector(".modal-bg");
+    modalOverlay.style.display = "none";
+}
+
+
+</script>
+
+<style>
+#status {
+    margin-left: 0;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #827A98;
+    background-color: white;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 400;
+    color: #827A98;
+}
+
+.select {
+    width: 100%;
+}
+
+.modal {
+    width: 100%;
+}
+</style>
