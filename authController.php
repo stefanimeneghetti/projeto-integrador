@@ -1,9 +1,9 @@
 <?php
+include_once "./classes/profissionais/ProfissionalDAO.php";
 
 
 class AuthController {
     public function login() {
-        include_once "./classes/profissionais/ProfissionalDAO.php";
         if(isset($_POST['login'])){
             
             $email = $_POST['email'];
@@ -12,7 +12,7 @@ class AuthController {
             $db = new ProfissionalDAO();
             $user = $db->findOne($email);
 
-            if($user && $password == $user->getSenha()){ 
+            if($user && password_verify($password, $user->getSenha())){ 
                 session_start();
                 $_SESSION['logged'] = true;
                 $_SESSION['session_start'] = date("d/m/Y h:i:s");

@@ -51,7 +51,7 @@ class profissionaisController {
                 $db->create($val);
             }
 
-            //header('Location: index.php?acao=profissionais/listar');
+            header('Location: index.php?acao=profissionais/listar');
         }
     }
 
