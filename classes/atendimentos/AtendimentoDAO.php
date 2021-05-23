@@ -34,18 +34,6 @@
             }
         }
 
-        public function getStatus() {
-            try{
-                $query = $this->db_connection->prepare("select * from status");
-                $query->execute();
-                $data = $query->fetchAll(PDO::FETCH_ASSOC);
-                return $data;
-            }
-            catch(PDOException $e){
-                echo "Erro no acesso aos dados: ". $e->getMessage();
-            }
-        }
-
         public function updateStatus($id, $status) {
             try {
                 $query = $this->db_connection->prepare("update atendimentos set
