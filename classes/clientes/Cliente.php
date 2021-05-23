@@ -39,6 +39,10 @@ class Cliente
         $this->historico = $historico;
     }
 
+    public function getObjectVars() {
+        return get_object_vars($this);
+    }
+
     public function validate(){
         $erros = array();
         if(empty($this->getNome()))

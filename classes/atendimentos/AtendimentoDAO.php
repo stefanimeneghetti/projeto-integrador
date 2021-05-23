@@ -65,7 +65,7 @@
                         (data, preco, descricao, quantidade_paga, cliente, status, profissional, servico) values
                         (:data, :preco, :descricao, :quantidade_paga, 
                         :cliente, :status, :profissional, :servico)");
-                $query->bindValue(":data", $atendimento->getData());
+                $query->bindValue(":data", $atendimento->getFullDate());
                 $query->bindValue(":preco", $atendimento->getPreco());
                 $query->bindValue(":descricao", $atendimento->getDescricao());
                 $query->bindValue(":quantidade_paga", $atendimento->getQuantidade_paga());
@@ -86,7 +86,7 @@
                         data=:data, preco=:preco, descricao=:descricao, quantidade_paga=:quantidade_paga, 
                         cliente=:cliente, status=:status, profissional=:profissional, servico=:servico
                         where id=:id");
-                $query->bindValue(":data", $atendimento->getData());
+                $query->bindValue(":data", $atendimento->getFullDate());
                 $query->bindValue(":preco", $atendimento->getPreco());
                 $query->bindValue(":descricao", $atendimento->getDescricao());
                 $query->bindValue(":quantidade_paga", $atendimento->getQuantidade_paga());
@@ -107,6 +107,34 @@
                 $query = $this->db_connection->prepare("delete from atendimentos where id=:id");
                 $query->bindParam(":id", $id);
                 return $query->execute();
+            }
+            catch(PDOException $e){
+                echo "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+
+        
+        public function getStatus() {
+            try {
+                $query = $this->db_connection->prepare("select * from status");
+                $query->execute();
+                $data = $query->fetchAll(PDO::FETCH_ASSOC);
+                return $data;
+            }
+            catch(PDOException $e){
+                echo "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+        
+        public function getAppointmentsByProfessional($id) {
+            try {
+                $query = $this->db_connection->prepare("select * from atendimentos where profissional=:id");
+                $query->bindParam(":id", $id);
+                $query->execute();
+                $data = $query->fetchAll(PDO::FETCH_CLASS, "Atendimento");
+                foreach($data as $appntmnt)
+                    $appntmnt->setData($appntmnt->getFullDate());
+                return $data;
             }
             catch(PDOException $e){
                 echo "Erro no acesso aos dados: ". $e->getMessage();

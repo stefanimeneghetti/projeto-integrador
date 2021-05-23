@@ -1,7 +1,51 @@
+<?php
+    require_once("./classes/profissionais/ProfissionalDAO.php");
+    require_once("./classes/servicos/ServicoDAO.php");
+    require_once("./classes/clientes/ClienteDAO.php");
+    require_once("./classes/capacitacao/CapacitacaoDAO.php");
+    require_once("./classes/atendimentos/AtendimentoDAO.php");
+    require_once("./utilidades.php");
+    $db_servico = new ServicoDAO();
+    $servicos = $db_servico->all();
+    $db_atendimento = new AtendimentoDAO();
+    $db_profissionais = new ProfissionalDAO();
+    $db_capacitacoes = new CapacitacaoDAO();
+    $profissionais_por_atendimento = array();
+    $qtd_de_profissionais_por_atendimento = array();
+    $horarios_ocupados_por_profissional = array();
+    foreach($db_profissionais->all() as $p)
+    {
+        $horarios = array();
+        foreach($db_atendimento->getAppointmentsByProfessional($p->getId()) as $agendamento)
+            $horarios[$agendamento->getFormattedDate()][] = $agendamento->getFormattedTime();
+        $horarios_ocupados_por_profissional[$p->getId()] = $horarios;
+    }
+
+    $qtd_de_servicos = 0;
+    foreach($servicos as $s) {
+        $profissionais = array();
+        $profissionais_de_s = $db_capacitacoes->findByServico($s->getId());
+        foreach($profissionais_de_s as $p) {
+            $profissionais[] = $db_profissionais->findById($p['id']);
+        }
+        $qtd_de_profissionais_por_atendimento[$qtd_de_servicos++] = $s->getId();
+        $profissionais_por_atendimento[$s->getId()] = $profissionais;
+    }
+    $services = $db_servico->all();
+    $status = $db_atendimento->getStatus();
+    $nome = isset($_POST['name']) ? $_POST['name'] : "";
+    $phone = isset($_POST['phone']) ? $_POST['phone'] : "";
+    $preco = isset($_POST['price']) ? $_POST['price'] : "";
+    $data = isset($_POST['data']) ? $_POST['data'] : "";
+    $horario = isset($_POST['time']) ? $_POST['time'] : "";
+    $preco = isset($_POST['price']) ? $_POST['price'] : "";
+    $descricao = isset($_POST['description']) ? $_POST['description'] : "";
+?>
 <div class="small-title">Agenda</div>
 <div class="page-content">
-    <div class="small-title">Novo agendamento <hr></div>
+    <div class="small-title">Novo agendamento<hr></div>
     <form method="post">
+        <input hidden id="selectedClientsId" name="client-id" value="">
         <div class="form-line">
             <span class="labeled-input ">
                 <input id="name" name="name" class="full-width" type="text">
@@ -15,18 +59,20 @@
                     Telefone
                 </label>
             </span>
-            <div class="btn btn--orange" style="width: 30%;"><a href="#">Cliente já registrado...</a></div>
+            <div class="btn btn--orange" style="width: 30%;" onclick="openClientsModal()"><a href="#">Cliente já registrado...</a></div>
         </div>
 
         <div class="form-line">  
             <span class="labeled-input">
-                <select id="service" name="service" class="full-width">
-                    <option hidden disabled selected value></option>
-                    <option value="1">Serviço A</option>
-                    <option value="2">Serviço B</option>
-                    <option value="3">Serviço C</option>
-                </select>
-                <label for="service">Selecionar serviço</label>
+                <div class="form-line">
+                    <select id="services" name="services" class="half-width" onchange="updateProfessionalOptions()">
+                        <option hidden disabled selected value></option>
+                        <?php foreach ($services as $service) { ?>
+                        <option value="<?php echo $service->getId() ?>"><?php echo $service->getNome() ?></option>
+                        <?php } ?>
+                    </select>
+                    <label for="services">Selecionar serviço</label>
+                </div>
             </span>
             
             <span class="labeled-input">
@@ -35,69 +81,60 @@
             </span>
 
             <span class="labeled-input">
+                <script>horariosDisponiveis = <?=json_encode($horarios_ocupados_por_profissional)?>;</script>
                 <select id="time" name="time" class="half-width">
                     <option hidden disabled selected value></option>
-                    <option value="1">05:00</option>
-                    <option value="2">05:30</option>
-                    <option value="1">06:00</option>
-                    <option value="2">06:30</option>
-                    <option value="1">07:00</option>
-                    <option value="2">07:30</option>
-                    <option value="1">08:00</option>
-                    <option value="2">08:30</option>
-                    <option value="1">09:00</option>
-                    <option value="2">09:30</option>
-                    <option value="1">10:00</option>
-                    <option value="2">10:30</option>
-                    <option value="1">11:00</option>
-                    <option value="2">11:30</option>
-                    <option value="1">12:00</option>
-                    <option value="2">12:30</option>
-                    <option value="1">13:00</option>
-                    <option value="2">13:30</option>
-                    <option value="1">14:00</option>
-                    <option value="2">14:30</option>
-                    <option value="1">15:00</option>
-                    <option value="2">15:30</option>
-                    <option value="1">16:00</option>
-                    <option value="2">16:30</option>
-                    <option value="1">17:00</option>
-                    <option value="2">17:30</option>
-                    <option value="1">18:00</option>
-                    <option value="2">18:30</option>
-                    <option value="1">19:00</option>
-                    <option value="2">19:30</option>
-                    <option value="1">20:00</option>
-                    <option value="2">20:30</option>
-                    <option value="1">21:00</option>
-                    <option value="2">21:30</option>
-                    <option value="1">22:00</option>
-                    <option value="2">22:30</option>
-                    <option value="1">23:00</option>
-                    <option value="2">23:30</option>
+                    
                 </select>
                 <label for="time">Horário</label>
-                </span>        
+            </span>
+        </div>
+
+        <div class="form-line">
+            <span class="labeled-input">
+                    <select id="status" name="status">
+                        <option hidden disabled selected value></option>
+                        <?php foreach ($status as $s) { ?>
+                        <option value="<?php echo $s['id'] ?>"><?php echo $s['descricao'] ?></option>
+                        <?php } ?>
+                    </select>
+                    <label for="status">Status do atendimento</label>
 
             <span class="labeled-input">
-                <input id="pago" name="pago" type="checkbox">
-                <label for="pago" style="margin-top: 2px">Pago</label>
+                <input id="price" name="price" type="text" value="<?php echo $preco ?>">
+                <label for="price">
+                    Preço pago
+                </label>
             </span>
-            </div>
-        </span>
+        </div>
 
         <span class="labeled-input">
-            <select id="professional" name="professional" class="full-width">
+            <select id="professional" name="professional" class="half-width" onchange="updateTimeOptions()">
                 <option hidden disabled selected value></option>
-                <option value="1">Zequinha</option>
-                <option value="2">Cicraninha</option>
-                <option value="3">Fulaninho</option>
+                <script>var qtd_profissionais_por_servico = <?= json_encode($qtd_de_profissionais_por_atendimento); ?>;</script>
+                <?php
+                foreach($profissionais_por_atendimento as $profissionais_habilitados)
+                {?>
+                <?php foreach($profissionais_habilitados as $p) {?>
+                    <option class="servico-<?=array_search($profissionais_habilitados, $profissionais_por_atendimento)?>" value="<?= $p->getId()?>" style="display:none;"><?= $p->getNome()?></option>
+                <?php }
+                }
+                ?>
             </select>
             <label for="professional">Selecionar profissional</label>
         </span>
-        
+
+        <div class="labeled-input">
+            <textarea id="description" name="description" class="full-width" value="<?php echo $descricao?>"></textarea>
+            <label for="description">
+                Descrição
+            </label>
+        </div>
         <div style="display: flex; justify-content: center;"><input type="submit" class="btn btn--green" value="Concluir agendamento"></div>
     </form>
-
 </div>
+<?php
+    include_once("./views/cliente/overlay.php");
+?>
 <script src="assets/js/forms.js"></script>
+<script src="assets/js/atendimentos.js"></script>

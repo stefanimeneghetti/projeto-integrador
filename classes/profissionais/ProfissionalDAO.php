@@ -55,6 +55,7 @@
                 echo "Erro no acesso aos dados: ". $e->getMessage();
             }
         }
+
         public function findById($id) {
             try{
                 $query = $this->db_connection->prepare("select * from profissionais where id=:id");
