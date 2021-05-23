@@ -40,7 +40,7 @@
                 </ul>
             </li>
             <li class="nav-list__item">
-                <a href="login.php">Sair</a>
+                <a href="authController.php?acao=logout">Sair</a>
             </li>
         </ul>
     </nav>

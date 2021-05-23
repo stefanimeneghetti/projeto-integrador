@@ -7,6 +7,7 @@ require_once "./classes/servicos/Servico.php";
 require_once "./classes/servicos/ServicoDAO.php";
 require_once "./classes/atendimentos/Atendimento.php";
 require_once "./classes/atendimentos/AtendimentoDAO.php";
+require_once  "authController.php";
 
 class atendimentosController {
     public function newAppointment(){
@@ -18,15 +19,15 @@ class atendimentosController {
             // tratar criação de cliente aqui
             // verificar se o nome e tel do cliente passado é o mesmo nome do cliente do id. se for diferente, houve criação de cliente
         }
-
+        
         // fazer tratamento do status aqui. fazer tratamento da qtd paga baseada no status
         $atendimento->setStatus($_POST["status"]);
         $atendimento->setQuantidade_paga($_POST["pago"]);
-
+        
         $atendimento->setData($_POST["date"] . " " . $_POST["time"]);
         $atendimento->setProfissional($_POST["professional"]);
         $atendimento->setDescricao($_POST["description"]);
-
+        
         $erros = $atendimento->validate(null);
         
         $capacitacoesValidadas = array();
@@ -41,12 +42,12 @@ class atendimentosController {
                 $erros = array_merge($erros, $capacitation->validate(true));
             }
         }
-
+        
         if(count($erros) != 0) {
             include "views/layout/header.php";
             include "views/layout/side-bar.php";?>
             <main>
-            <?php include "views/profissionais/cadastrar.php";?>
+                <?php include "views/profissionais/cadastrar.php";?>
             </main>
             <?php include "views/layout/footer.php";
         }
@@ -60,25 +61,25 @@ class atendimentosController {
                 $val->setProfissional($profissionalId);
                 $db->create($val);
             }
-
+            
             header('Location: index.php?acao=profissionais/listar');
         }
     }
-
+    
     // recebe o dia no formato "Y-m-d" 
     public function getAppointmentByDay($day) {
         $db = new AtendimentoDAO();
         $appointments = $db->getByDay($day);
         return $appointments;
     }
-
+    
     public function deleteAppointment($email){
         require_once("./classes/profissionais/ProfissionalDAO.php");
         $db = new ProfissionalDAO();
         $db->delete($email);
         header('Location: index.php?acao=profissionais/listar');
     }
-
+    
     public function editAppointment($email) {
         if(!isset($_POST['altera']))
         {
@@ -88,7 +89,7 @@ class atendimentosController {
             include_once "views/layout/header.php";
             include_once "views/layout/side-bar.php";?>
             <main>
-            <?php include_once "views/profissionais/editar.php";?>
+                <?php include_once "views/profissionais/editar.php";?>
             </main>
             <?php include_once "views/layout/footer.php";
         }
@@ -121,7 +122,7 @@ class atendimentosController {
                 include_once "views/layout/header.php";
                 include_once "views/layout/side-bar.php";?>
                 <main>
-                <?php include_once "views/profissionais/editar.php";?>
+                    <?php include_once "views/profissionais/editar.php";?>
                 </main>
                 <?php include_once "views/layout/footer.php";
             }
@@ -139,13 +140,13 @@ class atendimentosController {
             }
         }
     }
-
+    
     public function getPossibleStatus() {
         $db = new AtendimentoDAO();
         $status = $db->getStatus();
         return $status;
     }
-
+    
     public function updateStatus($id) {
         $db = new AtendimentoDAO();
         $status = $_POST['appointmentStatus'];
@@ -154,6 +155,8 @@ class atendimentosController {
     }
 }
 
+$auth = new AuthController();
+$auth->isAuthenticate();
 $action = explode("/", $_GET['acao']);
 $controller = new atendimentosController();
 switch($action[0]) {

@@ -86,7 +86,7 @@
                         (:email, :nome, :senha, :telefone, :endereco, 1)");
                 $query->bindValue(":email", $profissional->getEmail());
                 $query->bindValue(":nome", $profissional->getNome());
-                $query->bindValue(":senha", $profissional->getSenha());
+                $query->bindValue(":senha", password_hash($profissional->getSenha(), PASSWORD_DEFAULT));
                 $query->bindValue(":telefone", $profissional->getTelefone());
                 $query->bindValue(":endereco", $profissional->getEndereco());
                 return $query->execute();

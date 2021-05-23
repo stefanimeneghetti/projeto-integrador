@@ -1,6 +1,7 @@
 <?php 
 require_once "./classes/clientes/Cliente.php";
 require_once "./classes/clientes/ClienteDAO.php";
+require_once "./authController.php";
 
 class clientesController {
     public function newCliente(){
@@ -77,6 +78,8 @@ class clientesController {
     }
 }
 
+$auth = new AuthController();
+$auth->isAuthenticate();
 $action = explode("/", $_GET['acao']);
 switch($action[0]) {
     case 'excluir': 
