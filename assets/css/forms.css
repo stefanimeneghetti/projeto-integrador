@@ -174,3 +174,31 @@
         width: 90%;
     }
 }
+
+
+.status--schedule {
+    margin-left: 0;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #827A98;
+    background-color: white;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 400;
+    color: #827A98;
+}
+
+.schedule-see-more {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    align-self: flex-end;
+}
+
+.select--schedule {
+    width: 100%;
+}
+
+.modal .modal--schedule {
+    width: 100%;
+}

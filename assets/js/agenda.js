@@ -9,6 +9,7 @@ window.onload = e => {
     generateCalendar(month, year);
     calendarNext.addEventListener("click", e => nextMonth());
     calendarPrev.addEventListener("click", e => prevMonth());
+    openCalendarDay();
 }
 
 const MONTH_NAMES = [
@@ -66,6 +67,7 @@ function generateCalendar (month, year) {
         for (let i = 0; i < 7; i++) {
             const dayDiv = document.createElement("div");
             dayDiv.classList.add("row__day");
+            dayDiv.id = formatDate(Calendar);
             const span = document.createElement("span");
             span.innerHTML = "";
             dayDiv.appendChild(span);
@@ -106,3 +108,28 @@ function nextMonth() {
     }
     generateCalendar(month, year);
 }
+
+function formatDate(date) {
+    let day = addZeroBefore(date.getDate().toString());
+    let month = addZeroBefore((date.getMonth() + 1).toString());
+    let year = date.getFullYear();
+
+    let formattedDate = year+"-"+month+"-"+day;
+    return formattedDate;
+}
+
+function addZeroBefore(item) {
+    if (item.length == 1) 
+        return item = "0"+item;
+    return item;
+}
+
+function openCalendarDay() {
+    document.querySelectorAll(".row__day").forEach(day => {
+        day.addEventListener("click", () => 
+            window.location.href = "index.php?acao=agenda/listar&day="+day.id
+        )
+    })
+}
+
+

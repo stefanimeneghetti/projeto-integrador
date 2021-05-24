@@ -1,23 +1,29 @@
 <?php 
     include_once "./atendimentosController.php";
     $controller = new atendimentosController();
-    $day = strtotime('2021-05-20 15:00:00');
-    $day_string = date('Y-m-d');
+    $day_string = isset($_GET['day']) ? $_GET['day'] : date('Y-m-d');
     $appointments = $controller->getAppointmentByDay($day_string);
 
     $status = $controller->getPossibleStatus();
-?>
+// ?>
 
 <h1 class="small-title">Agenda</h1>
 <div class="page-content">
     <div class="page-content__header">
-        <button id="daily-schedule" class="toggle-schedule-btn toggle-schedule-btn--select">Diária</button>
+        <button id="daily-schedule" class="toggle-schedule-btn toggle-schedule-btn--select">
+            Diária
+            <?php echo isset($_GET['day'])  && $_GET['day']  != date('Y-m-d') ? "(".date("d/m/Y",strtotime($_GET['day'])).")": "" ?>
+        </button>
         <button id="monthly-schedule" class="toggle-schedule-btn">Mensal</button>
     </div>
+    <?php if (isset($_GET['day']) && $_GET['day']  != date('Y-m-d')) {?>
+            <a href="index.php?acao=agenda/listar" class="schedule-see-more btn">Ver a Agenda de Hoje</a>
+    <?php } ?>
     <div class="schedule">
+        
         <div class="schedule--day">
             <?php if (count($appointments) == 0) {?>
-                <p>Nenhum atendimento registrado!</p>
+                <p>Nenhum atendimento registrado para o dia de hoje!</p>
             <?php } ?>
             <?php foreach ($appointments as $appointment) { ?>
                 <div class="schedule__item">
@@ -73,11 +79,11 @@
 </div>
 
 <div class="modal-bg">
-    <form class="modal" method="post" action="">
+    <form class="modal modal--schedule" method="post" action="">
         <div class="modal-close" onclick="closeModal()">X</div>
         <label for="status">Selecionar estado do atendimento</label>
-        <span class="select">
-            <select id="status" name="appointmentStatus" class="">
+        <span class="select select--schedule">
+            <select id="status" name="appointmentStatus" class="status--schedule">
                 <?php foreach ($status as $state) { ?>
                     <option value="<?= $state['id'] ?>"><?= $state['descricao'] ?></option>
                 <?php } ?>
@@ -100,29 +106,4 @@ function closeModal() {
     modalOverlay = document.querySelector(".modal-bg");
     modalOverlay.style.display = "none";
 }
-
-
 </script>
-
-<style>
-#status {
-    margin-left: 0;
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 2px solid #827A98;
-    background-color: white;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: 400;
-    color: #827A98;
-}
-
-.select {
-    width: 100%;
-}
-
-.modal {
-    width: 100%;
-}
-</style>

@@ -4,6 +4,7 @@ require_once "./classes/servicos/Servico.php";
 require_once "./classes/servicos/ServicoDAO.php";
 require_once "./classes/capacitacao/Capacitacao.php";
 require_once "./classes/capacitacao/CapacitacaoDAO.php";
+require_once "./authController.php";
 
 class servicosController {
     public function newService(){
@@ -137,6 +138,8 @@ class servicosController {
     }
 }
 
+$auth = new AuthController();
+$auth->isAuthenticate();
 $action = explode("/", $_GET['acao']);
 switch($action[0]) {
     case 'excluir': 

@@ -4,6 +4,7 @@ require_once "./classes/profissionais/Profissional.php";
 require_once "./classes/profissionais/ProfissionalDAO.php";
 require_once "./classes/capacitacao/Capacitacao.php";
 require_once "./classes/capacitacao/CapacitacaoDAO.php";
+require_once "./authController.php";
 
 class profissionaisController {
     public function newProfessional(){
@@ -136,6 +137,8 @@ class profissionaisController {
     }
 }
 
+$auth = new AuthController();
+$auth->isAuthenticate();
 $action = explode("/", $_GET['acao']);
 switch($action[0]) {
     case 'excluir': 

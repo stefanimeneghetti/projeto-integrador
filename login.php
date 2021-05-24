@@ -1,10 +1,13 @@
 <?php
 include_once("views/layout/header.php");
-?>   
+?>
     <main class="login-main">
         <div class="login"><span class="small-title">Login</span><hr>
             <div class="login-content">
-                <form method="post">
+                <?php
+                        echo "<br><div>$error</div>";
+                ?>
+                <form method="post" action="authController.php?acao=login">
                     <div class="labeled-input">
                         <input id="email" name="email" type="email" required>
                         <label for="email">
@@ -17,7 +20,7 @@ include_once("views/layout/header.php");
                             Senha
                         </label>
                     </div>
-                    <input type="submit" class="btn btn--purple" value="Efetuar login">
+                    <input type="submit" class="btn btn--purple" value="Efetuar login" name="login">
                 </form>
                 <div class="recover"><a href="#">Esqueci minha senha</a></div>
             </div>
@@ -26,4 +29,4 @@ include_once("views/layout/header.php");
     </main>
 <?php
 include_once("views/layout/footer.php");
-?>  
+?>
