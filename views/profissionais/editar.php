@@ -4,8 +4,6 @@
     $services = $db->all();
     $name = isset($_POST['name']) ? $_POST['name'] : $professional->getNome();
     $phone = isset($_POST['phone']) ? $_POST['phone'] : $professional->getTelefone();
-    $password = isset($_POST['password']) ? $_POST['password'] : $professional->getSenha();
-    $confirmPassword = isset($_POST['password-confirm']) ? $_POST['password-confirm'] : $professional->getSenha();
     $email = isset($_POST['email']) ? $_POST['email'] :  $professional->getEmail();
     $address = isset($_POST['address']) ? $_POST['address'] :  $professional->getEndereco();
 ?>
@@ -23,13 +21,13 @@
         </span>
         <div class="form-line">
             <span class="labeled-input">
-                <input id="password" name="password" class="half-width" type="password" value="<?php echo $password; ?>">
+                <input id="password" name="password" class="half-width" type="password">
                 <label for="password">
                     Senha
                 </label>
             </span>
             <span class="labeled-input">
-                <input id="password-confirm" name="password-confirm" class="half-width" type="password" value="<?php echo $confirmPassword; ?>">
+                <input id="password-confirm" name="password-confirm" class="half-width" type="password">
                 <label for="password-confirm">
                     Confirmar senha
                 </label>

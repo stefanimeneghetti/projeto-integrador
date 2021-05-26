@@ -6,31 +6,13 @@
     require_once("./classes/atendimentos/AtendimentoDAO.php");
     require_once("./utilidades.php");
     $db_servico = new ServicoDAO();
-    $servicos = $db_servico->all();
     $db_atendimento = new AtendimentoDAO();
     $db_profissionais = new ProfissionalDAO();
     $db_capacitacoes = new CapacitacaoDAO();
     $profissionais_por_atendimento = array();
     $qtd_de_profissionais_por_atendimento = array();
     $horarios_ocupados_por_profissional = array();
-    foreach($db_profissionais->all() as $p)
-    {
-        $horarios = array();
-        foreach($db_atendimento->getAppointmentsByProfessional($p->getId()) as $agendamento)
-            $horarios[$agendamento->getFormattedDate()][] = $agendamento->getFormattedTime();
-        $horarios_ocupados_por_profissional[$p->getId()] = $horarios;
-    }
-
-    $qtd_de_servicos = 0;
-    foreach($servicos as $s) {
-        $profissionais = array();
-        $profissionais_de_s = $db_capacitacoes->findByServico($s->getId());
-        foreach($profissionais_de_s as $p) {
-            $profissionais[] = $db_profissionais->findById($p['id']);
-        }
-        $qtd_de_profissionais_por_atendimento[$qtd_de_servicos++] = $s->getId();
-        $profissionais_por_atendimento[$s->getId()] = $profissionais;
-    }
+    $profissionais = $db_profissionais->all();
     $services = $db_servico->all();
     $status = $db_atendimento->getStatus();
     $nome = isset($_POST['name']) ? $_POST['name'] : "";
@@ -42,6 +24,8 @@
     $data = isset($_POST['date']) ? $_POST['date'] : "";
     $horario = isset($_POST['time']) ? $_POST['time'] : "";
     $descricao = isset($_POST['description']) ? $_POST['description'] : "";
+    $servico_hidden = isset($_POST['hidden-service']) ? $_POST['hidden-service'] : "";
+    $profissional_hidden = isset($_POST['hidden-professional']) ? $_POST['hidden-professional'] : "";
 ?>
 <div class="small-title">Agenda</div>
 <div class="page-content">
@@ -66,44 +50,38 @@
 
         <div class="form-line">
             <span class="labeled-input">
-                    <select id="service" name="service" onchange="resetService()" value="<?=$servico?>">
-                        <!-- <option hidden disabled selected value></option> -->
+                    <select id="service" name="service" value="<?=$servico?>">
+                    <option hidden disabled selected value></option>
                         <?php foreach ($services as $service) { ?>
                         <option value="<?php echo $service->getId() ?>"><?php echo $service->getNome() ?></option>
                         <?php } ?>
                     </select>
                     <label for="service">Selecionar serviço</label>
             </span>
-            <span class="labeled-input" <?=isset($_POST['service']) && !empty($_POST['service']) ? "" : " style='display:none'" ?>>
-                <select id="professional" name="professional" onchange="resetProfessional()" value="<?=$profissional?>">
-                    <!-- <option hidden disabled selected value></option> -->
-                    <script>var qtd_profissionais_por_servico = <?= json_encode($qtd_de_profissionais_por_atendimento); ?>;</script>
-                    <?php
-                    foreach($profissionais_por_atendimento as $profissionais_habilitados)
-                    {?>
-                    <?php foreach($profissionais_habilitados as $p) {?>
-                        <option class="servico-<?=array_search($profissionais_habilitados, $profissionais_por_atendimento)?>" value="<?= $p->getId()?>" style="display:none;"><?= $p->getNome()?></option>
-                    <?php }
-                    }
-                    ?>
+            <span class="labeled-input">
+                <select id="professional" name="professional" value="<?=$profissional?>">
+                    <option hidden disabled selected value></option>
+                    <?php foreach ($profissionais as $p) { ?>
+                        <option value="<?php echo $p->getId() ?>"><?php echo $p->getNome() ?></option>
+                        <?php } ?>
                 </select>
                 <label for="professional">Selecionar profissional</label>
             </span>
         </div>
 
         <div class="form-line">
-            <span class="labeled-input" <?=isset($_POST['professional']) && !empty($_POST['professional'])? "" : " style='display:none'" ?>>
-                <input id="date" name="date" type="date" onchange="resetDate()" value="<?=$data?>">
+            <span class="labeled-input">
+                <input id="date" name="date" type="date" value="<?=$data?>">
                 <label for="date" style="margin-top: 2px">Data</label>
             </span>
-            <span class="labeled-input" <?=isset($_POST['date']) && !empty($_POST['date']) ? "" : " style='display:none'" ?>>
+            <span class="labeled-input">
                 <select id="time" name="time" value="<?=$horario?>">
-                    <!-- <option hidden disabled selected value></option> -->
+                    <option hidden disabled selected value></option>
                     <?php
-                        if(isset($appointment_times))
-                            foreach($appointment_times as $app_time)
-                                echo "<option value='{$app_time}:00'>{$app_time}</option>";
-                        
+                    for($timeframeHour = 6; $timeframeHour < 24; $timeframeHour++)
+                        for($timeframeMinute = 0; $timeframeMinute < 60; $timeframeMinute += 30)
+                            echo "<option value='".date("H:i", strtotime($timeframeHour . ":" . $timeframeMinute))."'>".
+                            date("H:i", strtotime($timeframeHour . ":" . $timeframeMinute))."</option>";
                     ?>
                     
                 </select>
@@ -114,7 +92,7 @@
         <div class="form-line">
             <span class="labeled-input">
                     <select id="status" name="status" value="<?=$status?>">
-                        <!-- <option hidden disabled selected value></option> -->
+                        <option hidden disabled selected value></option>
                         <?php foreach ($status as $s) { ?>
                         <option value="<?php echo $s['id'] ?>"><?php echo $s['descricao'] ?></option>
                         <?php } ?>

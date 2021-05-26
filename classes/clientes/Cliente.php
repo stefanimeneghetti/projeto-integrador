@@ -49,7 +49,7 @@ class Cliente
             $erros[] = "É necessário informar um nome";
         if(empty($this->getTelefone()))
             $erros[] = "É necessário informar um telefone";
-        if(preg_match("/[^\p{L}\s'\-]/i", $this->getNome()))
+        if(preg_match("/[^\p{L}\s'\-]/ui", $this->getNome()))
             $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas";
         if(preg_match("/[^\d]/i", $this->getTelefone()))
             $erros[] = "Caracteres inválidos no campo telefone. Utilize apenas números";

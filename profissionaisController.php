@@ -155,3 +155,4 @@ switch($action[0]) {
         $controller->editProfessional($action[1]);
         break;
 }
+?>

@@ -38,7 +38,8 @@
                 $query->bindParam(":id", $id, PDO::PARAM_INT);
                 $query->execute();
                 $appointments = $query->fetchAll(PDO::FETCH_CLASS, "Atendimento");
-                $data->setHistorico($appointments);
+                if($appointments)
+                    $data->setHistorico($appointments);
                 return $data;
             }
             catch(PDOException $e){

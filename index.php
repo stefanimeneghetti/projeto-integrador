@@ -11,7 +11,7 @@ include_once("authController.php");
         include_once("views/{$_GET['acao']}.php");
     }
     else{
-        include_once("views/dashboard.php");
+        include_once("views/agenda/listar.php");
     }
     ?>
     </main>

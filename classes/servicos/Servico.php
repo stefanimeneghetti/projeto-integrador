@@ -69,7 +69,7 @@ class Servico
         $erros = array();
         if(empty($this->getNome()))
             $erros[] = "É necessário informar um nome";
-        else if(preg_match("/[^\p{L}\s'\-]/i", $this->getNome()))
+        else if(preg_match("/[^\p{L}\s'\-]/ui", $this->getNome()))
             $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas, ' e -";
         if(empty($this->getDuracao()))
             $erros[] = "É necessário informar uma duração";

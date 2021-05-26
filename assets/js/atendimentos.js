@@ -78,22 +78,24 @@ function updateProfessionalOptions() {
         selectedServices[j].style.display = "inline";
 }
 
-function resetService() {
-    document.querySelector("#professional").parentElement.style.display = "none";
-    document.querySelector("#professional").value = "";
-    resetProfessional();
-}
+// function resetService() {
+//     document.querySelector("#professional").parentElement.style.display = "none";
+//     document.querySelector("#professional").value = "";
+//     document.querySelector("#hidden-service").value = document.querySelector("#service").value;
+//     resetProfessional();
+// }
 
-function resetProfessional() {
-    document.querySelector("#date").parentElement.style.display = "none";
-    document.querySelector("#date").value = "";
-    resetDate();
-}
+// function resetProfessional() {
+//     document.querySelector("#date").parentElement.style.display = "none";
+//     document.querySelector("#date").value = "";
+//     document.querySelector("#hidden-professional").value = document.querySelector("#professional").value;
+//     resetDate();
+// }
 
-function resetDate() {
-    document.querySelector("#time").parentElement.style.display = "none";
-    document.querySelector("#time").value = "";
-}
+// function resetDate() {
+//     document.querySelector("#time").parentElement.style.display = "none";
+//     document.querySelector("#time").value = "";
+// }
 
 // function updateTimeOptions() {
 //     timeField = document.querySelector("#time");
@@ -140,24 +142,24 @@ timeField = document.querySelector("#time");
 professionalField = document.querySelector("#professional");
 dateField = document.querySelector("#date");
 serviceField = document.querySelector("#service");
-form = document.querySelector("form");
+// form = document.querySelector("form");
 
-serviceField.addEventListener("change", function() {
-    updateProfessionalOptions();
-    professionalField.parentElement.style.display = 'inline';
-    dateField.parentElement.style.display = 'none';
-    timeField.parentElement.style.display = 'none';
-});
+// serviceField.addEventListener("change", function() {
+//     updateProfessionalOptions();
+//     professionalField.parentElement.style.display = 'inline';
+//     dateField.parentElement.style.display = 'none';
+//     timeField.parentElement.style.display = 'none';
+// });
 
-professionalField.addEventListener("change", function() {
-    dateField.parentElement.style.display = 'block';
-    timeField.parentElement.style.display = 'none';
-});
+// professionalField.addEventListener("change", function() {
+//     dateField.parentElement.style.display = 'block';
+//     timeField.parentElement.style.display = 'none';
+// });
 
-document.querySelector("#date").addEventListener("change", function (e) {
-    timeField.parentElement.style.display = 'block';
-    document.querySelector("form").submit();
-});
+// document.querySelector("#date").addEventListener("change", function (e) {
+//     timeField.parentElement.style.display = 'block';
+//     document.querySelector("form").submit();
+// });
 
 document.querySelector("#name").addEventListener("change", function(e) {
     e.target.style.borderColor = '#827A98';

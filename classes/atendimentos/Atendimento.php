@@ -172,15 +172,7 @@ class Atendimento {
 
     public function validate() {
         $erros = array();
-        // TODO validar serviço e profissional associado.
-        $db_profissionais = new ProfissionalDAO();
-        if(is_null($db_profissionais->findById($this->getProfissional())))
-            $erros[] = "Profissional selecionado não encontrado";
-        $db_servicos = new ServicoDAO();
-        if(is_null($db_servicos->findOne($this->getServico())))
-            $erros[] = "Serviço selecionado não encontrado";
         if(null !== $this->getCliente()) {
-            echo "aaaaaa". $this->getCliente();
             $db_clientes = new ClienteDAO();
             $c = $db_clientes->findOne($this->getCliente());
             if(is_null($c))
@@ -191,8 +183,32 @@ class Atendimento {
             $c->setTelefone($this->getTelefone());
             $erros = array_merge($erros, $c->validate());
         }
-        
-        // vazios
+        $db_profissionais = new ProfissionalDAO();
+        $db_servicos = new ServicoDAO();
+        $db_atendimento = new AtendimentoDAO();
+        $db_capacitacao = new CapacitacaoDAO();
+        if(is_null($db_profissionais->findById($this->getProfissional())))
+            $erros[] = "Profissional selecionado não encontrado";
+        else if(is_null($db_servicos->findOne($this->getServico())))
+            $erros[] = "Serviço selecionado não encontrado";
+        else
+        {
+            $exists = false;
+            foreach($db_capacitacao->findByProfessional($this->getProfissional()) as $c)
+            {
+                if($this->getServico() == $c['id'])
+                $exists = true;
+            }
+            if(!$exists)
+                $erros[] = "Este profissional não está capacitado a oferecer o serviço selecionado";
+            else
+            {
+                $possibleAppointmentTimes = $db_atendimento->getPossibleAppointmentTimes($this->getProfissional(), $this->getServico(), $this->getFullDate());
+                if(!in_array(date("H:i", strtotime($this->getFullDate())), $possibleAppointmentTimes))
+                    $erros[] = "Este horário não está disponível para este funcionário";
+            }
+        }
+            // vazios
         if(empty($this->getFullDate()))
             $erros[] = "É necessário informar uma data";
         if(empty($this->getProfissional()))

@@ -10,6 +10,28 @@
             $this->db_connection = Connection::connect();
         }
 
+        public function findOne($id) {
+            try {
+                $query = $this->db_connection->prepare("select * from atendimentos where id=:id");
+                $query->bindValue(":id", $id);
+                $query->setFetchMode(PDO::FETCH_CLASS, 'Atendimento'); 
+                $query->execute();
+                $data = $query->fetch(PDO::FETCH_CLASS, PDO::FETCH_ORI_NEXT, 0);
+                $clienteId  = $data->getId();
+                $query = $this->db_connection->prepare("select * from clientes where id=:id");
+                $query->bindValue(":id", $clienteId);
+                $query->setFetchMode(PDO::FETCH_CLASS, 'Cliente'); 
+                $query->execute();
+                $data2 = $query->fetch(PDO::FETCH_CLASS, PDO::FETCH_ORI_NEXT, 0);
+                $data->setTelefone($data2->getTelefone());
+                $data->setNome($data2->getNome());
+                return $data;
+            }
+            catch(PDOException $e){
+                echo "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+
         public function getByDay($day) {
             try {
                 $query = $this->db_connection->prepare("select 

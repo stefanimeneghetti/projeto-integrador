@@ -22,7 +22,7 @@ class AuthController {
                     $_SESSION['logged'] = true;
                     $_SESSION['session_start'] = date("d/m/Y h:i:s");
                     $_SESSION['user-email'] = $email;
-                    header("Location: index.php");
+                    header("Location: index.php?acao=agenda/listar");
                 }
                 else{
                     $errors[] = "Email ou Senha incorretos";
@@ -34,7 +34,7 @@ class AuthController {
     }
 
     public function logout() {
-        session_start();
+        @session_start();
         session_destroy();
         header("Location: login.php");
     }
@@ -62,3 +62,4 @@ if(isset($_GET['acao']))
             break;
     }
 }
+?>
