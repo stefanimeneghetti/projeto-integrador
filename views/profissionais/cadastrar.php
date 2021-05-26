@@ -13,18 +13,7 @@
 <div class="page-content">
     <div class="small-title">Novo profissional <hr></div>
     <form method="post" action="profissionaisController.php?acao=cadastrar">
-        <div class="col-md-6 mt-4 pl-0 user-information__user-image">
-            <div class="user-image__wrapper">
-                <img src="assets/images/placeholder.png" class="user-image__image" alt="Preview da imagem do usuário.">
-                <label class="user-image__label" for="user-image" tabindex=0>
-                    <input type="file" name="user-image" class="user-image__input" accept="image/*" id="user-image"/>
-                    <img src="assets/images/icons/lapis.svg" alt="Selecionar foto do profissional.">
-                </label>
-            </div>
-        </div>
-        <br>
-        <hr>
-        <br>
+
         <span class="labeled-input">
             <input id="name" name="name" class="full-width" type="text" value="<?=$name?>">
             <label for="name">

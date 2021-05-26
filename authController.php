@@ -9,21 +9,27 @@ class AuthController {
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            $db = new ProfissionalDAO();
-            $user = $db->findOne($email);
-
-            if($user && password_verify($password, $user->getSenha())){ 
-                session_start();
-                $_SESSION['logged'] = true;
-                $_SESSION['session_start'] = date("d/m/Y h:i:s");
-                header("Location: index.php");
-            }
-            else{
-                $error = "Email ou Senha incorretos";
-                include_once("views/layout/header.php");
-                include_once("login.php");
+            if(empty($email))
+                $errors[] = "Obrigatório informar o login";
+            else if(empty($password))
+                $errors[] = "Obrigatório informar a senha";
+            else {
+                $db = new ProfissionalDAO();
+                $user = $db->findOne($email);
+    
+                if($user && password_verify($password, $user->getSenha())){ 
+                    session_start();
+                    $_SESSION['logged'] = true;
+                    $_SESSION['session_start'] = date("d/m/Y h:i:s");
+                    header("Location: index.php");
+                }
+                else{
+                    $errors[] = "Email ou Senha incorretos";
+                }
             }
         }
+        include_once("views/layout/header.php");
+        include_once("login.php");
     }
 
     public function logout() {
@@ -39,17 +45,19 @@ class AuthController {
         }
     }
 }
-
-$action = $_GET['acao'];
-$controller = new AuthController();
-switch($action) {
-    case 'login': 
-        $controller->login(); 
-        break;
-    case 'authenticate': 
-        $controller->isAuthenticate();
-        break;
-    case 'logout':
-        $controller->logout();
-        break;
+if(isset($_GET['acao']))
+{
+    $action = $_GET['acao'];
+    $controller = new AuthController();
+    switch($action) {
+        case 'login': 
+            $controller->login(); 
+            break;
+        case 'authenticate': 
+            $controller->isAuthenticate();
+            break;
+        case 'logout':
+            $controller->logout();
+            break;
+    }
 }

@@ -52,13 +52,17 @@ function selectClient(id, name, phone) {
     hiddenInput = document.querySelector("#selectedClientsId");
     clientsName = document.querySelector("#name");
     clientsPhone = document.querySelector("#phone");
+
     hiddenInput.value = id;
     clientsName.value = name;
     clientsPhone.value = phone;
+
+    clientsName.style.borderColor = '#608b5c';
+    clientsPhone.style.borderColor = '#608b5c';
 }
 
 function updateProfessionalOptions() {
-    services = document.querySelector("#services");
+    services = document.querySelector("#service");
     // esconder os valores não selecionados
     for(var i = 0; i < qtd_profissionais_por_servico.length; i++)
     {
@@ -72,50 +76,96 @@ function updateProfessionalOptions() {
 
     for(var j = 0; j < selectedServices.length; j++)
         selectedServices[j].style.display = "inline";
-    
-        var del = "";
-    for(var i = 0; i < selectedServices.length; i++)
-    del += selectedServices[i];
-        document.write(del);
 }
 
-function updateTimeOptions() {
-    timeField = document.querySelector("#time");
-    professionalField = document.querySelector("#professional");
-    dateField = document.querySelector("#date");
-    serviceField = document.querySelector("#services");
-    if(dateField.value == "" || professionalField.value == ""|| serviceField.value == "")
-        return;
-    timeField.innerHTML = "";
-    minuteTimeFrames = ["00", "15", "30", "45"];
-    scheduledAppointments = horariosDisponiveis[professionalField.value][dateField.value];
-    if(scheduledAppointments != undefined)
-        scheduledAppointments.sort();
-    
-    for(var h = 6; h < 24; h++)
-        minuteTimeFrames.forEach(minuteFrame => {
-
-            opt = document.createElement("option");
-            const timeFrame = h + ":" + minuteFrame;
-            opt.innerHTML = timeFrame;
-            opt.value = dateField.value + " " + opt.innerHTML;
-            if(!isViableAppointment(serviceField.value, timeFrame, scheduledAppointments))
-                opt.setAttribute("disabled");
-            time.appendChild(opt);
-        });
+function resetService() {
+    document.querySelector("#professional").parentElement.style.display = "none";
+    document.querySelector("#professional").value = "";
+    resetProfessional();
 }
 
-function isViableAppointment(serviceLength, timeFrame, scheduledAppointments) {
-    
-    if(scheduledAppointments == undefined)
-        return true;
-    scheduledAppointments.forEach(appt => {
-        const calculatedTime = (timeFrame.split(":")[0] * 100) + timeFrame.split(":")[1] +
-                               (serviceLength.split(":")[0] * 100) + serviceLength.split(":")[1];
-        const calculatedTime2 = (appt.split(":")[0] * 100) + appt.split(":")[1];
-        if(calculatedTime - calculatedTime2 > 0)
-            // return false;
-            document.write(calculatedTime - calculatedTime2);
-    });
-    return true;
+function resetProfessional() {
+    document.querySelector("#date").parentElement.style.display = "none";
+    document.querySelector("#date").value = "";
+    resetDate();
 }
+
+function resetDate() {
+    document.querySelector("#time").parentElement.style.display = "none";
+    document.querySelector("#time").value = "";
+}
+
+// function updateTimeOptions() {
+//     timeField = document.querySelector("#time");
+//     professionalField = document.querySelector("#professional");
+//     dateField = document.querySelector("#date");
+//     serviceField = document.querySelector("#services");
+//     if(dateField.value == "" || professionalField.value == ""|| serviceField.value == "")
+//         return;
+//     timeField.innerHTML = "";
+//     minuteTimeFrames = ["00", "15", "30", "45"];
+//     scheduledAppointments = horariosDisponiveis[professionalField.value][dateField.value];
+//     if(scheduledAppointments != undefined)
+//         scheduledAppointments.sort();
+    
+//     for(var h = 6; h < 24; h++)
+//         minuteTimeFrames.forEach(minuteFrame => {
+
+//             opt = document.createElement("option");
+//             const timeFrame = h + ":" + minuteFrame;
+//             opt.innerHTML = timeFrame;
+//             opt.value = dateField.value + " " + opt.innerHTML;
+//             if(!isViableAppointment(serviceField.value, timeFrame, scheduledAppointments))
+//                 opt.setAttribute("disabled");
+//             time.appendChild(opt);
+//         });
+// }
+
+// function isViableAppointment(serviceLength, timeFrame, scheduledAppointments) {
+    
+//     if(scheduledAppointments == undefined)
+//         return true;
+//     scheduledAppointments.forEach(appt => {
+//         const calculatedTime = (timeFrame.split(":")[0] * 100) + timeFrame.split(":")[1] +
+//                                (serviceLength.split(":")[0] * 100) + serviceLength.split(":")[1];
+//         const calculatedTime2 = (appt.split(":")[0] * 100) + appt.split(":")[1];
+//         if(calculatedTime - calculatedTime2 > 0)
+//             // return false;
+//             document.write(calculatedTime - calculatedTime2);
+//     });
+//     return true;
+// }
+
+timeField = document.querySelector("#time");
+professionalField = document.querySelector("#professional");
+dateField = document.querySelector("#date");
+serviceField = document.querySelector("#service");
+form = document.querySelector("form");
+
+serviceField.addEventListener("change", function() {
+    updateProfessionalOptions();
+    professionalField.parentElement.style.display = 'inline';
+    dateField.parentElement.style.display = 'none';
+    timeField.parentElement.style.display = 'none';
+});
+
+professionalField.addEventListener("change", function() {
+    dateField.parentElement.style.display = 'block';
+    timeField.parentElement.style.display = 'none';
+});
+
+document.querySelector("#date").addEventListener("change", function (e) {
+    timeField.parentElement.style.display = 'block';
+    document.querySelector("form").submit();
+});
+
+document.querySelector("#name").addEventListener("change", function(e) {
+    e.target.style.borderColor = '#827A98';
+    document.querySelector("#phone").style.borderColor = '#827A98';
+    document.querySelector("#selectedClientsId").value = "";
+});
+document.querySelector("#phone").addEventListener("change", function(e) {
+    e.target.style.borderColor = '#827A98';
+    document.querySelector("#name").style.borderColor = '#827A98';
+    document.querySelector("#selectedClientsId").value = "";
+});

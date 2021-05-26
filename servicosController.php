@@ -12,7 +12,9 @@ class servicosController {
         $service = new Servico();
         $service->setNome($_POST["name"]);
         $service->setPreco(str_replace(",",".", preg_replace("/[R\$\s]/", "", $_POST["price"]))); 
-        $service->setDuracao((strlen($_POST["estimated-time"]) > 3? $_POST["estimated-time"] : ("0:" . $_POST["estimated-time"])) . ":00");
+        $service->setDuracao(empty($_POST["estimated-time"])? $_POST["estimated-time"] : 
+                            (strlen($_POST["estimated-time"]) > 3? $_POST["estimated-time"] :
+                            ("0:" . $_POST["estimated-time"])) . ":00");
         $service->setDescricao($_POST["description"]);
         $service->setAtivo(1);
 

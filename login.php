@@ -5,17 +5,19 @@ include_once("views/layout/header.php");
         <div class="login"><span class="small-title">Login</span><hr>
             <div class="login-content">
                 <?php
-                        echo "<br><div>$error</div>";
+                    if(isset($errors))
+                        foreach($errors as $error)
+                            echo "<br><p>$error</p>";
                 ?>
                 <form method="post" action="authController.php?acao=login">
                     <div class="labeled-input">
-                        <input id="email" name="email" type="email" required>
+                        <input id="email" name="email" type="email" value="<?=isset($_POST['email'])? $_POST['email'] :"" ?>">
                         <label for="email">
                             Email
                         </label>
                     </div>
                     <div class="labeled-input">
-                        <input id="password" name="password" type="password" required>
+                        <input id="password" name="password" type="password">
                         <label for="password">
                             Senha
                         </label>

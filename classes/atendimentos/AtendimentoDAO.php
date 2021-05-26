@@ -64,7 +64,7 @@
                 return $query->execute();
             }
             catch(PDOException $e){
-                echo "Erro no acesso aos dados: ". $e->getMessage();
+                return "Erro no acesso aos dados: ". $e->getMessage();
             }
         }
 
@@ -113,7 +113,7 @@
                 echo "Erro no acesso aos dados: ". $e->getMessage();
             }
         }
-        
+
         public function getAppointmentsByProfessional($id) {
             try {
                 $query = $this->db_connection->prepare("select * from atendimentos where profissional=:id");
@@ -129,6 +129,56 @@
             }
         }
 
+        public function getPossibleAppointmentTimes($professionalId, $service, $date) {
+            try {
+                $appointments = $this->db_connection->prepare("select a.data as start, s.duracao as duration from atendimentos a
+                                                               join servicos s on a.servico = s.id where a.profissional=:id
+                                                               and a.data between :daybeg and :dayend order by a.data");
+                $appointments->bindParam(":id", $professionalId);
+                $daybeg = date('Y-m-d', strtotime($date)) . " 06:00:00";
+                $dayend = date('Y-m-d', strtotime($date)) . " 23:30:00";
+                $appointments->bindParam(":daybeg", $daybeg);
+                $appointments->bindParam(":dayend", $dayend);
+                $appointments->execute();
+                $data = $appointments->fetchAll(PDO::FETCH_ASSOC);
+                $app_timeframes = array();
+                $serviceDuration = $this->dateToSecs((new ServicoDAO())->findOne($service)->getDuracao());
+                $offset = $this->dateToSecs("0:30:0");
+                for($timeframeHour = 6; $timeframeHour < 24; $timeframeHour++)
+                {
+                    for($timeframeMinute = 0; $timeframeMinute < 60; $timeframeMinute += 30)
+                    {
+                            $timeframeStart = $timeframeHour . ":" . $timeframeMinute. ":0";
+                            $timeframeStartInt = $this->dateToSecs($timeframeStart);
+                            $timeframeEndInt = $timeframeStartInt + $serviceDuration;
+                            $i = 1;
+                            foreach($data as $app)
+                            {
+                                $appointmentStartInt = $this->dateToSecs(date('H:i:s', strtotime($app['start'])));
+                                $appointmentEndInt = $this->dateToSecs($app['duration']) + $appointmentStartInt;
+                                if(($timeframeStartInt < $appointmentEndInt && $timeframeStartInt > $appointmentStartInt) ||
+                                   ($timeframeEndInt < $appointmentEndInt && $timeframeEndInt > $appointmentStartInt) ||
+                                   ($timeframeStartInt < $appointmentStartInt && $timeframeStartInt + $offset > $appointmentEndInt))
+                                   {
+                                       $i = 0;
+                                       break;
+                                   }
+                            }
+                            if($i == 1)
+                                $app_timeframes[] = date('H:i', strtotime($timeframeStart));
+                    }
+                }
+                
+                return $app_timeframes;
+            }
+            catch(PDOException $e){ 
+                return "Erro no acesso aos dados: ". $e->getMessage();
+            }
+        }
+        private function dateToSecs($date) {
+            $date = explode(":", $date);
+            return ((int) $date[2]) + (((int) $date[1]) * 60) + (((int) $date[0]) * 3600);
+        }
     }
 
 ?>

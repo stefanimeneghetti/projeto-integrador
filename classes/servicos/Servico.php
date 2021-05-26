@@ -72,7 +72,8 @@ class Servico
         else if(preg_match("/[^\p{L}\s'\-]/i", $this->getNome()))
             $erros[] = "Caracteres inválidos no campo nome. Utilize apenas letras maiúsculas e minúsculas, ' e -";
         if(empty($this->getDuracao()))
-            $erros[] = "É necessário informar uma duração" . " " .$this->getDuracao();
+            $erros[] = "É necessário informar uma duração";
+
         else if(!preg_match("/\d*:\d*:00/", $this->getDuracao()))
             $erros[] = "Duração inválida. Apenas dígitos são aceitos";
         if(empty($this->getPreco()))

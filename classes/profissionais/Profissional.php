@@ -119,7 +119,7 @@ class Profissional
         if(strlen($this->getTelefone()) > 15)
             $erros[] = "Campo telefone muito longo. Máximo de 15 caracteres";
         if(strlen($this->getTelefone()) < 8)
-            $erros[] = "Campo telefone ".$this->getTelefone()."muito curto. Mínimo de 8 caracteres";
+            $erros[] = "Campo telefone muito curto. Mínimo de 8 caracteres";
         if(strlen($this->getEndereco()) > 250)
             $erros[] = "Campo endereço muito longo. Máximo de 250 caracteres";
         if(strlen($this->getEmail()) > 254)

@@ -28,6 +28,6 @@
     $db = new ClienteDAO();
     $clientes = $db->all();
     foreach($clientes as $c){
-        ?>clientes.push(<?php echo (json_encode($c->getObjectVars()).");");
+        ?>clientes.push(<?php echo (json_encode($c->getObjectVars()) . ");");
     }?>
 </script>

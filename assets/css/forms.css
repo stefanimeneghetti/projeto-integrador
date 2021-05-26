@@ -13,6 +13,7 @@
     font-size: inherit;
     font-weight: 400;
     color: #827A98;
+    max-width: 100%;
 }
 
 .labeled-input select:focus {

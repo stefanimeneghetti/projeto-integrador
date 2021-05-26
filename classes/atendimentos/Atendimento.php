@@ -15,6 +15,8 @@ class Atendimento {
 
     private $data_formatada;
     private $horario_formatado;
+    private $nomeCliente;
+    private $telefoneCliente;
 
     public function getId()
     {
@@ -109,6 +111,22 @@ class Atendimento {
         $this->servico = $servico;
     }
 
+    public function setTelefone($telefone) {
+        $this->telefoneCliente = $telefone;
+    }
+    
+    public function getTelefone() {
+        return $this->telefoneCliente;
+    }
+    
+    public function setNome($nome) {
+        $this->nomeCliente = $nome;
+    }
+
+    public function getNome() {
+        return $this->nomeCliente;
+    }
+
     // retorna HH:MM
     public function getFormattedTime()
     {
@@ -152,22 +170,46 @@ class Atendimento {
         $this->duracao = $time;
     }
 
-    public function validate(){
+    public function validate() {
         $erros = array();
         // TODO validar serviço e profissional associado.
+        $db_profissionais = new ProfissionalDAO();
+        if(is_null($db_profissionais->findById($this->getProfissional())))
+            $erros[] = "Profissional selecionado não encontrado";
+        $db_servicos = new ServicoDAO();
+        if(is_null($db_servicos->findOne($this->getServico())))
+            $erros[] = "Serviço selecionado não encontrado";
+        if(null !== $this->getCliente()) {
+            echo "aaaaaa". $this->getCliente();
+            $db_clientes = new ClienteDAO();
+            $c = $db_clientes->findOne($this->getCliente());
+            if(is_null($c))
+                $erros[] = "Cliente selecionado não encontrado";
+        } else {
+            $c = new Cliente();
+            $c->setNome($this->getNome());
+            $c->setTelefone($this->getTelefone());
+            $erros = array_merge($erros, $c->validate());
+        }
 
         // vazios
-        if(empty($this->getFormattedDate()))
+        if(empty($this->getFullDate()))
             $erros[] = "É necessário informar uma data";
-        if(empty($this->getPreco()))
+        if(empty($this->getProfissional()))
+            $erros[] = "É necessário informar um profissional";
+        if(empty($this->getServico()))
+           $erros[] = "É necessário informar um serviço";       
+        if(empty($this->getQuantidade_paga()))
             $erros[] = "É necessário informar um preço";
+        else if(preg_replace("/^\d+((,\d{1,2})|(\.\d{1,2}))?$/", "", $this->getQuantidade_paga()) == $this->getQuantidade_paga())
+            $erros[] = "Preço inválido. Apenas números, vírgulas e pontos são aceitos nos formatos \"xxxx,xx\", \"xxxx.xx\" e \"xx\"";
+        if(empty($this->getStatus()))
+            $erros[] = "É necessário informar um status";
 
         // característicos
-        $data = explode("-", $this->getFormattedDate());
-        if(!checkDate($data[1], $data[0], $data[2]))
+        $data = explode(".", $this->getFormattedDate());
+        if(!checkDate($data[0], $data[1], $data[2]))
             $erros[] = "Campo data inválido";
-        if(preg_match("/\d*/", $this->getQuantidade_paga()))
-            $erros[] = "Quantidade paga inválida. Apenas dígitos são aceitos";
         
         // tamanho
         if(strlen($this->getDescricao()) > 250)
