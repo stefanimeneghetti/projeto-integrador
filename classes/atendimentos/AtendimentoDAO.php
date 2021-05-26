@@ -54,7 +54,7 @@
                         (:data, :preco, :descricao, :quantidade_paga, 
                         :cliente, :status, :profissional, :servico)");
                 $query->bindValue(":data", $atendimento->getFullDate());
-                $query->bindValue(":preco", $atendimento->getPreco());
+                $query->bindValue(":preco", $atendimento->getQuantidade_paga());
                 $query->bindValue(":descricao", $atendimento->getDescricao());
                 $query->bindValue(":quantidade_paga", $atendimento->getQuantidade_paga());
                 $query->bindValue(":cliente", $atendimento->getCliente());

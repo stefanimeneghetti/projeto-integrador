@@ -21,6 +21,7 @@ class AuthController {
                     session_start();
                     $_SESSION['logged'] = true;
                     $_SESSION['session_start'] = date("d/m/Y h:i:s");
+                    $_SESSION['user-email'] = $email;
                     header("Location: index.php");
                 }
                 else{
@@ -39,7 +40,7 @@ class AuthController {
     }
 
     public function isAuthenticate() {
-        session_start();
+        @session_start();
         if ($_SESSION['logged'] != true) {
             header("Location: login.php");
         }

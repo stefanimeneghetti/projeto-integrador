@@ -191,7 +191,7 @@ class Atendimento {
             $c->setTelefone($this->getTelefone());
             $erros = array_merge($erros, $c->validate());
         }
-
+        
         // vazios
         if(empty($this->getFullDate()))
             $erros[] = "É necessário informar uma data";

@@ -58,6 +58,7 @@
                 echo "</ul>";
             }            
         ?></div>
+        
         <input type="submit" class="btn btn--purple" value="Confirmar exclusão">
     </form>
 </div>

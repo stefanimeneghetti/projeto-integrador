@@ -66,9 +66,9 @@ class atendimentosController {
                     $db_c->create($c);
                     $atendimento->setCliente($db_c->db_connection->lastInsertId());
                 }
-                echo  $db->create($atendimento);
+                $db->create($atendimento);
                 
-                // header('Location: index.php?acao=agenda/listar');
+                header('Location: index.php?acao=agenda/listar');
             }
         }
     }
