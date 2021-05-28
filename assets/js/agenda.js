@@ -95,6 +95,7 @@ function prevMonth() {
         month = 11;
     }
     generateCalendar(month, year);
+    openCalendarDay();
 }
 
 function nextMonth() {
@@ -107,6 +108,7 @@ function nextMonth() {
         month = 0;
     }
     generateCalendar(month, year);
+    openCalendarDay();
 }
 
 function formatDate(date) {
